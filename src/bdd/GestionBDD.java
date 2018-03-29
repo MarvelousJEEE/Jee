@@ -32,8 +32,8 @@ public class GestionBDD {
 		return gestion;
 	}
 	
-	public boolean isUser(HttpServletRequest request) {
-		
+	public boolean isUser(HttpServletRequest request) throws SQLException {
+		boolean isUser = false;
 		Connection connexion = null;
 	    PreparedStatement statement = null;
 	    ResultSet resultat = null;
@@ -42,27 +42,25 @@ public class GestionBDD {
 	    String pseudo = (String) request.getParameter("pseudo");
 	    String mdp = (String) request.getParameter("password");
 	    
-	    System.out.println(pseudo);
-	    System.out.println(mdp);
 	    if(pseudo != null && mdp != null) {
 	    	try {
 	    		Class.forName("com.mysql.jdbc.Driver");
 		        connexion = (Connection) DriverManager.getConnection(conf.getUrl(), conf.getUser(), conf.getPassword());
-		        System.out.println("Hello");
-	    		statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players where pseudo="+pseudo+" and password="+mdp);
-		        System.out.println(pseudo);
-		        System.out.println(mdp);
-		        //statement.setString(1, pseudo);
-		        //statement.setString(2,  mdp);
+	    		statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players where pseudo=? and password=?");
+		        statement.setString(1, pseudo);
+		        statement.setString(2,  mdp);
 		        resultat = statement.executeQuery();
+		        System.out.println(resultat.toString());
 	        } catch ( SQLException e ) {
 	        	e.printStackTrace();
 		    } catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} finally {
+				
 		        if ( resultat != null ) {
 		            try {
+		            	isUser=hasTuple(resultat);
 		                resultat.close();
 		            } catch ( SQLException ignore ) {
 		            }
@@ -79,17 +77,14 @@ public class GestionBDD {
 		            } catch ( SQLException ignore ) {
 		            }
 		        }
-		    }
-	    	if(resultat==null) {
-	    		return false;
-	    	}else {
-	    		return true;
-	    	}
-	       }else {
-	        return false;
-	       }
-	        
+			}
+	    }
+	    return isUser;
 	   
+	}
+	
+	public boolean hasTuple(ResultSet r) throws SQLException {
+		return r.next();
 	}
 
 	public List<String> executerTests( HttpServletRequest request ) {
