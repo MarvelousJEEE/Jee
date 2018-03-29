@@ -17,7 +17,7 @@ public class TestBdd extends HttpServlet {
 	 */
 	private static final long serialVersionUID = 1L;
 	public static final String ATT_MESSAGES = "messages";
-    public static final String VUE          = "/WEB-INF/test_jdbc.jsp";
+    public static final String VUE          = "/WEB-INF/Views.jsp";
     
     
     
