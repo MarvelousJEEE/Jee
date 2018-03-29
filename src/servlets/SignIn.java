@@ -18,7 +18,7 @@ import bdd.GestionBDD;
 @WebServlet("/signin")
 public class SignIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    public static final String VUE          = "/Views/signIn.jsp";
+    public static final String VUE = "/Views/signIn.jsp";
     
     
     public SignIn() {
@@ -30,12 +30,17 @@ public class SignIn extends HttpServlet {
     	
     	System.out.println(request.toString());
     	boolean b = bdd.isUser(request);
-    	System.out.println(b);
+    	System.out.println("is user : "+b);
         //this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
     }
     
     
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-    	this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+    	
+    	GestionBDD bdd = GestionBDD.getInstance();
+    	System.out.println(request.toString());
+    	boolean b = bdd.isUser(request);
+    	System.out.println(b);
+        //this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
     }
 }

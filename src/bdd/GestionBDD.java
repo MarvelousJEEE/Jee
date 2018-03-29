@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import com.mysql.jdbc.Connection;
@@ -25,6 +24,7 @@ public class GestionBDD {
 		try {
 	        Class.forName( "com.mysql.jdbc.Driver" );
 	    } catch ( ClassNotFoundException e ) {
+	    	e.printStackTrace();
 	    }
 	}
 	
@@ -33,25 +33,34 @@ public class GestionBDD {
 	}
 	
 	public boolean isUser(HttpServletRequest request) {
+		
 		Connection connexion = null;
 	    PreparedStatement statement = null;
 	    ResultSet resultat = null;
 	    ConfigBDD conf = ConfigBDD.getInstance();
-	    String pseudo = (String) request.getAttribute("pseudo");
-	    String mdp = (String) request.getAttribute("password");
+	    
+	    String pseudo = (String) request.getParameter("pseudo");
+	    String mdp = (String) request.getParameter("password");
+	    
 	    System.out.println(pseudo);
 	    System.out.println(mdp);
 	    if(pseudo != null && mdp != null) {
 	    	try {
-		        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword() );
-		        statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players where pseudo=MacFly and password=456;");
+	    		Class.forName("com.mysql.jdbc.Driver");
+		        connexion = (Connection) DriverManager.getConnection(conf.getUrl(), conf.getUser(), conf.getPassword());
+		        System.out.println("Hello");
+	    		statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players where pseudo="+pseudo+" and password="+mdp);
 		        System.out.println(pseudo);
 		        System.out.println(mdp);
 		        //statement.setString(1, pseudo);
 		        //statement.setString(2,  mdp);
 		        resultat = statement.executeQuery();
 	        } catch ( SQLException e ) {
-		    } finally {
+	        	e.printStackTrace();
+		    } catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
 		        if ( resultat != null ) {
 		            try {
 		                resultat.close();
