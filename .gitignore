@@ -1,2 +1,5 @@
 /build/
 /.metadata/
+src/bdd/ConfigBDD.java
+.settings/org.eclipse.wst.common.project.facet.core.xml
+RemoteSystemsTempFiles/
