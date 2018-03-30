@@ -36,6 +36,11 @@ public class SignIn extends HttpServlet {
     
     
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-    	this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+    	GestionBDD bdd = GestionBDD.getInstance();
+    	
+    	System.out.println(request.toString());
+    	boolean b = bdd.isUser(request);
+    	System.out.println(b);
+        //this.getServletContext().getRequestDispatcher( VUE ).forward( request, response ); 
     }
 }
