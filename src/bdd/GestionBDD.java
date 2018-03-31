@@ -37,14 +37,14 @@ public class GestionBDD {
 	    PreparedStatement statement = null;
 	    ResultSet resultat = null;
 	    ConfigBDD conf = ConfigBDD.getInstance();
-	    String pseudo = (String) request.getAttribute("pseudo");
-	    String mdp = (String) request.getAttribute("password");
+	    String pseudo = (String) request.getParameter("pseudo");
+	    String mdp = (String) request.getParameter("password");
 	    System.out.println(pseudo);
 	    System.out.println(mdp);
 	    if(pseudo != null && mdp != null) {
 	    	try {
 		        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword() );
-		        statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players where pseudo=MacFly and password=456;");
+		        statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players where pseudo="+pseudo+" and password="+mdp+" ;");
 		        System.out.println(pseudo);
 		        System.out.println(mdp);
 		        //statement.setString(1, pseudo);
@@ -56,6 +56,7 @@ public class GestionBDD {
 		            try {
 		                resultat.close();
 		            } catch ( SQLException ignore ) {
+		            	ignore.printStackTrace();
 		            }
 		        }
 		        if ( statement != null ) {
