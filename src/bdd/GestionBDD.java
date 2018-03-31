@@ -76,12 +76,12 @@ public class GestionBDD {
 		            try {
 		                connexion.close();
 		            } catch ( SQLException ignore ) {
+		            	ignore.printStackTrace();
 		            }
 		        }
 			}
 	    }
 	    return isUser;
-	   
 	}
 	
 	public boolean hasTuple(ResultSet r) throws SQLException {
@@ -136,5 +136,34 @@ public class GestionBDD {
 	        }
 	    }
 	    return messages;
+	}
+	
+	/**
+	 * enregisterJoueur : ajoute dans la BDD un nouveau joueur
+	 * @param request provenant de signUp.jsp
+	 * @return reussite/echec
+	 */
+	public boolean enregisterJoueur(String pseudo, String password, String Birthday, String email) {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+	    ResultSet resultat = null;
+	    /* Connexion à la base de données */
+	    try {
+	        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+	        /* Verification pseudo */
+	        statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players WHERE Players.pseudo = pseudo ;");
+	        resultat = statement.executeQuery();
+	        if(!resultat.next()) {
+		        statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`) VALUES ("+pseudo+", "+password+", "+Birthday+", "+email+");");
+		        resultat = statement.executeQuery();
+	        } else {
+	        	// pseudo deja utilise
+	        	return false;
+	        }	        
+	    } catch (SQLException e ) {
+	    	e.printStackTrace();
+	    }
+		return false;
 	}
 }

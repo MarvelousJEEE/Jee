@@ -29,31 +29,32 @@ public class SignIn extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException {
     	GestionBDD bdd = GestionBDD.getInstance();
     	boolean isUser=false;
-	try {
-		isUser = bdd.isUser(request);
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	if(isUser) {
-		
-	}else {
-	       this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
-	}       
+		try {
+			isUser = bdd.isUser(request);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if(isUser) {
+			//TODO: faire une session + redirection vers une autre page
+		}else {
+			//TODO: message d'erreur => demander de se reconnecter
+		    this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+		}       
     }
     
     
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-	GestionBDD bdd = GestionBDD.getInstance();
-    	boolean isUser=false;
-	try {
-		isUser = bdd.isUser(request);
-	} catch (SQLException e) {
-		e.printStackTrace();
-	}
-	if(isUser) {
-		
-	}else {
-	       this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
-	}
+		GestionBDD bdd = GestionBDD.getInstance();
+	    boolean isUser=false;
+		try {
+			isUser = bdd.isUser(request);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		if(isUser) {
+			
+		} else {
+		       this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+		}
     }
 }
