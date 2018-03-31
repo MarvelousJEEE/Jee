@@ -1,6 +1,6 @@
 <%@include file="header.jsp"%>
 
-<form method="post" action="signin">
+<form method="post" action="/J2EE/signin">
 	<fieldset>
 		<legend>SignIn</legend>
 		<label for="pseudo">Pseudo</label>
