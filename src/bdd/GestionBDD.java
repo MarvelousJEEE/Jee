@@ -1,5 +1,6 @@
 package bdd;
 
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -140,10 +141,13 @@ public class GestionBDD {
 	
 	/**
 	 * enregisterJoueur : ajoute dans la BDD un nouveau joueur
-	 * @param request provenant de signUp.jsp
-	 * @return reussite/echec
+	 * @param pseudo
+	 * @param password
+	 * @param dateOfBirth
+	 * @param email
+	 * @return succes/echec
 	 */
-	public boolean enregisterJoueur(String pseudo, String password, String Birthday, String email) {
+	public boolean enregisterJoueur(String pseudo, String password, String dateOfBirth, String email) {
 		Connection connexion = null;
 		ConfigBDD conf = ConfigBDD.getInstance();
 	    PreparedStatement statement = null;
@@ -152,13 +156,23 @@ public class GestionBDD {
 	    try {
 	        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
 	        /* Verification pseudo */
-	        statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players WHERE Players.pseudo = pseudo ;");
+	        statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players WHERE Players.pseudo = ? ;");
+	        statement.setString(1, pseudo);
 	        resultat = statement.executeQuery();
+	        
 	        if(!resultat.next()) {
-		        statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`) VALUES ("+pseudo+", "+password+", "+Birthday+", "+email+");");
-		        resultat = statement.executeQuery();
+		        statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO Players (`pseudo`, `password`, `birthday`, `email`) VALUES (?,?,?,?)");
+		        statement.setString(1, pseudo);
+		        statement.setString(2, password);
+		        statement.setString(3, dateOfBirth);
+		        statement.setString(4, email);
+		        statement.execute();
+		        statement.close();
+		        System.out.println("Inscription reussi");
+		        return true;
 	        } else {
 	        	// pseudo deja utilise
+	        	System.out.println("pseudo deja utilise");
 	        	return false;
 	        }	        
 	    } catch (SQLException e ) {

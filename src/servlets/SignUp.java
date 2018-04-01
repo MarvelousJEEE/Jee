@@ -42,15 +42,13 @@ public class SignUp extends HttpServlet {
 		String dateOfBirth = request.getParameter("dateOfBirth");
 		String email = request.getParameter("email");
 		
-		/*
-		System.out.println("pseudo : "+pseudo);
-		System.out.println("password : "+password);
-		System.out.println("password2 : "+password2);
-		System.out.println("dateOfBirth:  "+dateOfBirth);
-		System.out.println("email : "+email);
-		*/
+		
 		GestionBDD bdd = GestionBDD.getInstance();
-		bdd.enregisterJoueur(pseudo, password, dateOfBirth, email);
+		if(password.equals(password2)) {
+			bdd.enregisterJoueur(pseudo, password, dateOfBirth, email);
+		} else {
+			System.out.println("erreur dans la verification du Password");
+		}
 	}
 
 }
