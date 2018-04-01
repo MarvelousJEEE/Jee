@@ -20,6 +20,7 @@ import bdd.GestionBDD;
 public class SignIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public static final String VUE = "/Views/signIn.jsp";
+    public static final String redirection = "/Views/games.jsp";
     
     
     public SignIn() {
@@ -36,6 +37,7 @@ public class SignIn extends HttpServlet {
 		}
 		if(isUser) {
 			//TODO: faire une session + redirection vers une autre page
+			 this.getServletContext().getRequestDispatcher( redirection ).forward( request, response );
 		}else {
 			//TODO: message d'erreur => demander de se reconnecter
 		    this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );

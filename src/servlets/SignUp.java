@@ -15,6 +15,8 @@ import bdd.GestionBDD;
 @WebServlet("/signup")
 public class SignUp extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String vue = "/Views/signUp.jsp";
+	private static final String redirection = "/Views/games.jsp";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -45,9 +47,15 @@ public class SignUp extends HttpServlet {
 		
 		GestionBDD bdd = GestionBDD.getInstance();
 		if(password.equals(password2)) {
-			bdd.enregisterJoueur(pseudo, password, dateOfBirth, email);
+			boolean a = bdd.enregisterJoueur(pseudo, password, dateOfBirth, email);
+			if (a) {
+				this.getServletContext().getRequestDispatcher(redirection).forward(request, response);
+			} else {
+				this.getServletContext().getRequestDispatcher(vue).forward(request, response);
+			}
 		} else {
 			System.out.println("erreur dans la verification du Password");
+			this.getServletContext().getRequestDispatcher( vue ).forward( request, response);
 		}
 	}
 

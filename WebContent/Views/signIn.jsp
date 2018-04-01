@@ -11,7 +11,7 @@
 		<input type="submit" value="Connexion"/>
 	</fieldset>
 </form>
-<form method="post" action="/J2EE/">
+<form method="post" action="/J2EE/Views/signUp.jsp">
 	<fieldset>
 		<legend>SignUp</legend>
 		<input type="submit" value="Inscription"/>
