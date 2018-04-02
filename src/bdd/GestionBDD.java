@@ -268,6 +268,27 @@ public class GestionBDD {
 		return null;
 	}
 	
+	
+	
+	public ResultSet getMatchs() {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+
+	    /* Connexion à la base de données */
+	    try {
+	        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+	        /* Verification pseudo */
+	        statement = (PreparedStatement) connexion.prepareStatement("select * from Matchs where hEnd is NULL;");
+	      return( statement.executeQuery());
+	                      
+	    } catch (SQLException e ) {
+	    	e.printStackTrace();
+	    }
+		return null;
+	}
+	
+
 
 	
 	

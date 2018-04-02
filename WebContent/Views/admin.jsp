@@ -27,8 +27,8 @@
 				<ul class="container">
 					<li><a href="#top">Game List</a></li>
 					<li><a href="#work">Add Game </a></li>
-					<li><a href="#portfolio">Portfolio</a></li>
-					<li><a href="#contact">Contact</a></li>
+					<li><a href="#portfolio"> Players </a></li>
+					<li><a href="#contact"> Plays </a></li>
 					<li><a href="#">LogOut</a></li>
 				</ul>
 			</nav>
@@ -96,12 +96,12 @@
 				</article>
 			</div>
 
-		<!-- Portfolio -->
+		<!-- Table player  -->
 			<div class="wrapper style3">
 				<article id="portfolio">
 					<header>
-						<h2>Here’s some stuff I made recently.</h2>
-						<p>Proin odio consequat  sapien vestibulum consequat lorem dolore feugiat lorem ipsum dolore.</p>
+						<h2> Table of all players </h2>
+						<p> You can ban or unbanned player as you please ! </p>
 					</header>
 					<div class="container">
 						<table class="table table-striped table-dark">
@@ -126,10 +126,11 @@
 							  
 							    <tr>
 							      <th scope="row"><%=k %></th>
-							      <td><%= ad.getPlayers().getString("pseudo") %></td>
-							      <td><%= ad.getPlayers().getString("ban") %></td>
-							      <td>@mdo</td>
-							     <td> <button  type="button" class="btn btn-primary btn-sm">  Ban :  click to unbann </button>
+							      <td> <%= ad.getPlayers().getString("pseudo") %> </td>
+							         <td> <%= ad.getPlayers().getString("subscription") %> </td>
+							      
+								  <td> N.A </td> 
+							     <td> <button  type="button" class="btn btn-primary btn-sm">  <%= ad.getPlayers().getString("ban") %> </button>
 							    </tr>
 							    
 							    <% } %>
@@ -138,82 +139,59 @@
 						</table>
 					
 					</div>
-					<footer>
-						<p>Lorem ipsum dolor sit sapien vestibulum ipsum primis?</p>
-						<a href="#contact" class="button big scrolly">Get in touch with me</a>
-					</footer>
+				
 				</article>
 			</div>
+
+
 
 		<!-- Contact -->
 			<div class="wrapper style4">
 				<article id="contact" class="container 75%">
 					<header>
-						<h2>Have me make stuff for you.</h2>
-						<p>Ornare nulla proin odio consequat sapien vestibulum ipsum sed lorem.</p>
+						<h2> Current plays  </h2>
+						<p>You can find here all current plays and end them as you please  </p>
 					</header>
 					<div>
-						<div class="row">
-							<div class="12u">
-								<form method="post" action="#">
-									<div>
-										<div class="row">
-											<div class="6u 12u(mobile)">
-												<input type="text" name="name" id="name" placeholder="Name" />
-											</div>
-											<div class="6u 12u(mobile)">
-												<input type="text" name="email" id="email" placeholder="Email" />
-											</div>
-										</div>
-										<div class="row">
-											<div class="12u">
-												<input type="text" name="subject" id="subject" placeholder="Subject" />
-											</div>
-										</div>
-										<div class="row">
-											<div class="12u">
-												<textarea name="message" id="message" placeholder="Message"></textarea>
-											</div>
-										</div>
-										<div class="row 200%">
-											<div class="12u">
-												<ul class="actions">
-													<li><input type="submit" value="Send Message" /></li>
-													<li><input type="reset" value="Clear Form" class="alt" /></li>
-												</ul>
-											</div>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-						<div class="row">
-							<div class="12u">
-								<hr />
-								<h3>Find me on ...</h3>
-								<ul class="social">
-									<li><a href="#" class="icon fa-twitter"><span class="label">Twitter</span></a></li>
-									<li><a href="#" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
-									<li><a href="#" class="icon fa-dribbble"><span class="label">Dribbble</span></a></li>
-									<li><a href="#" class="icon fa-linkedin"><span class="label">LinkedIn</span></a></li>
-									<li><a href="#" class="icon fa-tumblr"><span class="label">Tumblr</span></a></li>
-									<li><a href="#" class="icon fa-google-plus"><span class="label">Google+</span></a></li>
-									<li><a href="#" class="icon fa-github"><span class="label">Github</span></a></li>
-									<!--
-									<li><a href="#" class="icon fa-rss"><span>RSS</span></a></li>
-									<li><a href="#" class="icon fa-instagram"><span>Instagram</span></a></li>
-									<li><a href="#" class="icon fa-foursquare"><span>Foursquare</span></a></li>
-									<li><a href="#" class="icon fa-skype"><span>Skype</span></a></li>
-									<li><a href="#" class="icon fa-soundcloud"><span>Soundcloud</span></a></li>
-									<li><a href="#" class="icon fa-youtube"><span>YouTube</span></a></li>
-									<li><a href="#" class="icon fa-blogger"><span>Blogger</span></a></li>
-									<li><a href="#" class="icon fa-flickr"><span>Flickr</span></a></li>
-									<li><a href="#" class="icon fa-vimeo"><span>Vimeo</span></a></li>
-									-->
-								</ul>
-								<hr />
-							</div>
-						</div>
+					
+						<table class="table table-striped table-dark">
+							  <thead>
+							    <tr>
+							    
+							    	
+							      <th scope="col">#</th>
+							      <th scope="col">Game</th>
+							      <th scope="col"> Pseudo </th>
+							      <th scope="col">Start</th>
+							      <th scope="col">Stop</th>
+							     
+							    </tr>
+							  </thead>
+							  <tbody>
+							  <% int i = 0; 			
+							  %>
+							   <%	while (ad.getMatchs().next()) { 
+							    i++;
+							   %>
+							
+							    <tr>
+							      <th scope="row"><%=i %></th>
+							      <td><%= ad.getMatchs().getString("gameName") %></td>
+							      <td><%= ad.getMatchs().getString("pseudo") %></td>
+							          <td><%= ad.getMatchs().getString("hBegin") %></td>
+							      
+							     <td> <button  type="button" class="btn btn-primary btn-sm">  End then game  </button>
+							    </tr>
+							    
+							    <% } %>
+							 
+							  </tbody>
+						</table>
+						
+						
+						
+						
+						
 					</div>
 					<footer>
 						<ul id="copyright">
@@ -223,56 +201,7 @@
 				</article>
 			</div>
 
-		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.scrolly.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/skel-viewport.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
-
-	</body>
-</html>
-	
-	<section id="two" class="main style2">
-	<div class="container">
-		<div class="row 150%">
-			<div class="6u 12u$(medium)">
-				<ul class="major-icons">
-					<li><span class="icon style1 major fa-code"></span></li>
-					<li><span class="icon style2 major fa-bolt"></span></li>
-					<li><span class="icon style3 major fa-camera-retro"></span></li>
-					<li><span class="icon style4 major fa-cog"></span></li>
-					<li><span class="icon style5 major fa-desktop"></span></li>
-					<li><span class="icon style6 major fa-calendar"></span></li>
-				</ul>
-			</div>
-			<div class="6u$ 12u$(medium)">
-				<header class="major"> 
-
-				<h2>
-	
-				</h2>
-				</header>
-				<p></p>
-				<p>Blandit faucibus proin. Ac aliquam integer adipiscing enim
-					non praesent vis commodo nunc phasellus cubilia ac risus accumsan.
-					Accumsan blandit. Lobortis phasellus non lobortis dit varius mi
-					varius accumsan lobortis. Blandit ante aliquam lacinia lorem
-					lobortis semper morbi col faucibus vitae integer placerat accumsan
-					orci eu mi odio tempus adipiscing adipiscing adipiscing curae
-					consequat feugiat etiam dolore.</p>
-				<p>Adipiscing a commodo ante nunc accumsan interdum mi ante
-					adipiscing. A nunc lobortis non nisl amet vis volutpat aclacus
-					nascetur ac non. Lorem curae eu ante amet sapien in tempus ac.
-					Adipiscing id accumsan adipiscing ipsum.</p>
-			</div>
-		</div>
-	</div>
-	</section>
-
-	<!-- Scripts -->
+<!-- Scripts -->
 			<script src="<%=request.getContextPath()%>/assets/js/jquery.min.js"></script>
 			<script src="<%=request.getContextPath()%>/assets/js/jquery.scrolly.min.js"></script>
 			<script src="<%=request.getContextPath()%>/assets/js/skel.min.js"></script>
@@ -281,5 +210,8 @@
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="<%=request.getContextPath()%>/assets/js/main.js"></script>
 
-</body>
+	</body>
 </html>
+	
+	
+	

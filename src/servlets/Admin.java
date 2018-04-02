@@ -20,6 +20,7 @@ public class Admin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ResultSet games; 
 	private ResultSet players; 
+	private ResultSet matchs; 
 	private GestionBDD bdd;
 	public static final String redirection = "/Views/admin.jsp";
 
@@ -31,7 +32,7 @@ public class Admin extends HttpServlet {
         this.bdd = GestionBDD.getInstance();
   	    this.games = bdd.getGames();
   	    this.players = bdd.getPlayers();
-        
+  	   this.matchs = bdd.getMatchs();
         // TODO Auto-generated constructor stub
     }
     
@@ -49,6 +50,14 @@ public class Admin extends HttpServlet {
         
     	return this.players ;
     }
+    
+   public ResultSet getMatchs() {
+        
+    	return this.matchs ;
+    }
+    
+    
+    
     
     
     
@@ -69,30 +78,16 @@ public class Admin extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 			String option = (String) request.getParameter("option");
-
-	
-			
-			 
-			
 		
-		  if ("delete".equals(option) ) {
-		
-				 
-				bdd.deleteGame(request);
-
-				 
+		  if ("delete".equals(option) ) {			 
+				bdd.deleteGame(request);				 
 		  }
  
 		   if( "add".equals(option) ) {
-		
-				 
-				  bdd.addGame(request);
-				
-					 
+				  bdd.addGame(request);	 
 			  }
 	
-	
-	
+		   
 			this.getServletContext().getRequestDispatcher( redirection ).forward( request, response );
 			
 	

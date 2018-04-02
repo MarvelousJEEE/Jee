@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Players` (
   `birthday` DATE NULL,
   `email` VARCHAR(45) NOT NULL,
   `ban` TINYINT(1) NULL DEFAULT 0,
+  `subscription` DATE NULL,
   PRIMARY KEY (`pseudo`))
 ENGINE = InnoDB;
 
@@ -65,8 +66,8 @@ CREATE TABLE IF NOT EXISTS `mydb`.`Matchs` (
   `idMatch` INT NOT NULL,
   `pseudo` VARCHAR(20) NOT NULL,
   `gameName` VARCHAR(45) NOT NULL,
-  `hBegin` TIME(0) NOT NULL,
-  `hEnd` TIME(0) NULL,
+  `hBegin` DATETIME NULL,
+  `hEnd` DATETIME NULL,
   PRIMARY KEY (`idMatch`),
   INDEX `fk_Matchs_Player1_idx` (`pseudo` ASC),
   INDEX `fk_Matchs_Games1_idx` (`gameName` ASC))
@@ -82,9 +83,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mydb`;
-INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`) VALUES ('MacFly', '456', '1999-05-15', 'mcfly@gmail.com', 0);
-INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`) VALUES ('MacChouffe', '213', '1995-03-12', 'macchouffegmal.com', 0);
-INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`) VALUES ('MacGros', '789', '1996-04-11', DEFAULT, 0);
+INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`) VALUES ('MacFly', '456', '1999-05-15', 'mcfly@gmail.com', 0, '2018-03-12');
+INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`) VALUES ('MacChouffe', '213', '1995-03-12', 'macchouffe@gmal.com', 0, '2018-03-13');
+INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`) VALUES ('MacGros', '789', '1996-04-11', 'macggros@gmail.com', 0, '2018-03-15');
+INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`) VALUES ('Louis', '123', '1996-04-11', 'loui@gmail.com', 0, '2018-03-16');
 
 COMMIT;
 
@@ -94,9 +96,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mydb`;
-INSERT INTO `mydb`.`Games` (`name`, `infos`, `release`, `show`) VALUES ('Game1', 'Zelda', '2015-09-15', 1);
-INSERT INTO `mydb`.`Games` (`name`, `infos`, `release`, `show`) VALUES ('Game2', 'Mario ', '2016-11-25', 1);
-INSERT INTO `mydb`.`Games` (`name`, `infos`, `release`, `show`) VALUES ('Game3', 'Sonic ', '2017-3-29', 1);
+INSERT INTO `mydb`.`Games` (`name`, `infos`, `release`, `show`) VALUES ('3', 'Zelda', '2015-09-15', 1);
+INSERT INTO `mydb`.`Games` (`name`, `infos`, `release`, `show`) VALUES ('2', 'Mario ', '2016-11-25', 1);
+INSERT INTO `mydb`.`Games` (`name`, `infos`, `release`, `show`) VALUES ('1', 'Sonic ', '2017-3-29', 1);
+INSERT INTO `mydb`.`Games` (`name`, `infos`, `release`, `show`) VALUES ('4', 'Pokemon', '1996-09-15', 1);
+INSERT INTO `mydb`.`Games` (`name`, `infos`, `release`, `show`) VALUES ('5', 'Yu-Gi-Ho', '2005-09-15', 1);
 
 COMMIT;
 
@@ -120,7 +124,13 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mydb`;
-INSERT INTO `mydb`.`Matchs` (`idMatch`, `pseudo`, `gameName`, `hBegin`, `hEnd`) VALUES (1, 'MacGros', 'Game1', '12:30:52', '12:40:35');
+INSERT INTO `mydb`.`Matchs` (`idMatch`, `pseudo`, `gameName`, `hBegin`, `hEnd`) VALUES (1, 'Louis', 'Zelda', '2018-03-15 12:50:12', '2018-03-15 13:50:12');
+INSERT INTO `mydb`.`Matchs` (`idMatch`, `pseudo`, `gameName`, `hBegin`, `hEnd`) VALUES (2 , 'MacFly', 'Mario ', '2018-03-15 12:55:12', '2018-03-15 14:50:12');
+INSERT INTO `mydb`.`Matchs` (`idMatch`, `pseudo`, `gameName`, `hBegin`, `hEnd`) VALUES (3, 'MacFly ', 'Mario ', '2017-03-15 16:50:12', '2014-03-15 18:50:12');
+INSERT INTO `mydb`.`Matchs` (`idMatch`, `pseudo`, `gameName`, `hBegin`, `hEnd`) VALUES (4, 'Louis ', 'Sonic ', '2018-03-16 12:50:12', '2018-03-15 12:55:12');
+INSERT INTO `mydb`.`Matchs` (`idMatch`, `pseudo`, `gameName`, `hBegin`, `hEnd`) VALUES (5, 'Louis ', 'Zelda', '2018-03-20 12:50:12', NULL);
+INSERT INTO `mydb`.`Matchs` (`idMatch`, `pseudo`, `gameName`, `hBegin`, `hEnd`) VALUES (6, 'MacGros', 'Mario', '2018-03-20 14:50:12', NULL);
+INSERT INTO `mydb`.`Matchs` (`idMatch`, `pseudo`, `gameName`, `hBegin`, `hEnd`) VALUES (7, 'MacFly', 'Sonic ', '2018-03-21 13:50:12', NULL);
 
 COMMIT;
 
