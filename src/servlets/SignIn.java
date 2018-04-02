@@ -34,25 +34,17 @@ public class SignIn extends HttpServlet {
     public void doPost(HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException {
     	GestionBDD bdd = GestionBDD.getInstance();
     	boolean isUser=false;
-		try {
-			isUser = bdd.isUser(request);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		if(isUser) {
-				User u = new User();
-				u.setPseudo(request.getParameter("pseudo"));
-				u.setAdmin(false); //TODO verif si admin
-				HttpSession session = request.getSession();
-				session.setAttribute( u.getPseudo(), u);
-				Cookie cookie = new Cookie( "user", u.getPseudo() );
-			    cookie.setMaxAge(60 * 60 * 24 * 365);
-			    response.addCookie( cookie );
-			 this.getServletContext().getRequestDispatcher( redirection ).forward( request, response );
-		}else {
-			//TODO: message d'erreur => demander de se reconnecter
-		    this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
-		}       
+	try {
+		isUser = bdd.isUser(request);
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}
+	if(isUser) {
+	       this.getServletContext().getRequestDispatcher("/Views/games.jsp").forward( request, response );
+
+	}else {
+	       this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+	}
     }
     
     

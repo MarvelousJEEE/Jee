@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
 
 import beans.User;
+import bdd.GestionBDD;
 
 /**
  * Servlet implementation class ServletGames
@@ -46,11 +47,20 @@ public class ServletGames extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String prenom = request.getParameter("variable1");
-		PrintWriter out = response.getWriter();
-		out.println(prenom);
-		JOptionPane.showMessageDialog(null,prenom);
+		String pseudo = request.getParameter("variable1");
+		String game = request.getParameter("variable2");		
+		String type = request.getParameter("variable3");
+		if(type.equals("play") &  !(pseudo.equals(""))) {
+			GestionBDD bdd = GestionBDD.getInstance();
+			bdd.enregisterPartie(pseudo,game);
+		}
+		if(type.equals("stop") & !(pseudo.equals(""))) {
+			GestionBDD bdd = GestionBDD.getInstance();
+			bdd.enregistrerStop(pseudo,game);
+			}
+		else {
+			System.out.println("erreur, reconnectez-vous");
 
+		}
 	}
-
 }
