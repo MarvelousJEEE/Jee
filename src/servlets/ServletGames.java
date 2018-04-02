@@ -8,7 +8,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.swing.JOptionPane;
+
+import beans.User;
 
 /**
  * Servlet implementation class ServletGames
@@ -16,7 +19,8 @@ import javax.swing.JOptionPane;
 @WebServlet("/servletgames")
 public class ServletGames extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+    public static final String VUE = "/Views/games.jsp";
+    public static final String redirection = "/Views/signIn.jsp";
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -28,7 +32,13 @@ public class ServletGames extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
+		if(SessionTools.isUser(request)) {
+			request.setAttribute("pseudo", SessionTools.getCookie(request, "user").getValue());
+			this.getServletContext().getRequestDispatcher(VUE).forward( request, response );
+		}else {
+			this.getServletContext().getRequestDispatcher(redirection).forward( request, response );
+
+		}
 
 	}
 

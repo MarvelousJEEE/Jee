@@ -9,7 +9,7 @@
 <body>
 	<h1>
 		Bonjour
-		<%=request.getParameter("pseudo")%>, amusez vous bien !
+		<%=request.getAttribute("pseudo")%>, amusez vous bien !
 	</h1>
 
 
