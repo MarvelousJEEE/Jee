@@ -113,7 +113,7 @@ public class GestionBDD {
 	        resultat = statement.executeQuery();
 	        
 	        if(!resultat.next()) {
-		        statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO Players (`pseudo`, `password`, `birthday`, `email`, 0) VALUES (?,?,?,?)");
+		        statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO Players (`pseudo`, `password`, `birthday`, `email`, `ban`) VALUES (?,?,?,?,0)");
 		        statement.setString(1, pseudo);
 		        statement.setString(2, password);
 		        statement.setString(3, dateOfBirth);
