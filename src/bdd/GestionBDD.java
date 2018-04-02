@@ -113,7 +113,7 @@ public class GestionBDD {
 	        resultat = statement.executeQuery();
 	        
 	        if(!resultat.next()) {
-		        statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO Players (`pseudo`, `password`, `birthday`, `email`) VALUES (?,?,?,?)");
+		        statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO Players (`pseudo`, `password`, `birthday`, `email`, 0) VALUES (?,?,?,?)");
 		        statement.setString(1, pseudo);
 		        statement.setString(2, password);
 		        statement.setString(3, dateOfBirth);
@@ -133,6 +133,7 @@ public class GestionBDD {
 		return false;
 	}
 	
+
 	/**
 	 * enregisterPartie : ajoute dans la BDD une nouvelle Partie
 	 * @param pseudo
@@ -174,3 +175,96 @@ public class GestionBDD {
 		}
 	}
 }
+
+	public ResultSet getGames() {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+
+	    /* Connexion à la base de données */
+	    try {
+	        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+	        /* Verification pseudo */
+	        statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Games;");
+	      return( statement.executeQuery());
+	                      
+	    } catch (SQLException e ) {
+	    	e.printStackTrace();
+	    }
+		return null;
+	}
+	
+	public void deleteGame( HttpServletRequest request) {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+	    	String name = (String) request.getParameter("name");
+	    	
+
+		   try {
+		        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+
+				   statement = (PreparedStatement) connexion.prepareStatement("Delete From Games where name = ? ;");
+			        statement.setString(1, name);
+			   
+			        statement.execute();
+			        statement.close();
+			   
+		                      
+		    } catch (SQLException e ) {
+		    	e.printStackTrace();
+		    }
+		
+	}
+	
+	public void addGame(HttpServletRequest request) {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+	    String name = (String) request.getParameter("name");
+		   String info = (String) request.getParameter("infos");
+		   String release = (String) request.getParameter("release");
+		   
+		   try {
+		        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+
+				   statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO Games (`name`, `infos`, `release`, `show`) VALUES (?,?,?,?)");
+			        statement.setString(1, name);
+			        statement.setString(2, info);
+			        statement.setString(3, release);
+			        statement.setString(4, "1");
+			        statement.execute();
+			        statement.close();
+			   
+		                      
+		    } catch (SQLException e ) {
+		    	e.printStackTrace();
+		    }
+		   
+		
+		 
+	}
+	
+	public ResultSet getPlayers() {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+
+	    /* Connexion à la base de données */
+	    try {
+	        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+	        /* Verification pseudo */
+	        statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players;");
+	      return( statement.executeQuery());
+	                      
+	    } catch (SQLException e ) {
+	    	e.printStackTrace();
+	    }
+		return null;
+	}
+	
+
+	
+	
+}
+
