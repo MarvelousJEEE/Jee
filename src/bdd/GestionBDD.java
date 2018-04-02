@@ -174,7 +174,7 @@ public class GestionBDD {
 		   	e.printStackTrace();
 		}
 	}
-}
+
 
 	public ResultSet getGames() {
 		Connection connexion = null;
