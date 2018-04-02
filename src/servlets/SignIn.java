@@ -52,7 +52,7 @@ public class SignIn extends HttpServlet {
 		}else {
 			//TODO: message d'erreur => demander de se reconnecter
 		    this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
-		}       
+		}
     }
     
     

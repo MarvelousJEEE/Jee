@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 
 import bdd.GestionBDD;
 import beans.User;
-
 /**
  * Servlet implementation class ServletGames
  */
