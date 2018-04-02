@@ -152,11 +152,11 @@ public class GestionBDD {
 	        statement.execute();
 	        statement.close();
 	        System.out.println("Le jeu va commencé");
-	    	} catch (SQLException e ) {
-		    	e.printStackTrace();
-		    }
-	
+	    } catch (SQLException e ) {
+		   	e.printStackTrace();
+		}
 	}
+	
 	public void enregistrerStop(String pseudo, String game) {
 		Connection connexion = null;
 		ConfigBDD conf = ConfigBDD.getInstance();
@@ -169,9 +169,8 @@ public class GestionBDD {
 	        statement.execute();
 	        statement.close();
 	        System.out.println("Le partie est terminée");
-	    	} catch (SQLException e ) {
-		    	e.printStackTrace();
-		    }
-	
+	    } catch (SQLException e ) {
+		   	e.printStackTrace();
+		}
 	}
 }
