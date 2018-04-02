@@ -13,11 +13,43 @@
 	<br>
 	<br>
 	<br>
-	<input type="submit" value="Play"  onclick="play()" size="300px"/>
-	<input type="submit" value="Stop"  onclick="stop()" size="300px"/>
-
+	<fieldset>
+		<h2> Game 1</h2>
+		<input type="submit" value="Play"  onclick="play('<%=request.getParameter("pseudo")%>','Game1')" size="300px"/>
+		<input type="submit" value="Stop"  onclick="stop('<%=request.getParameter("pseudo")%>','Game1')" size="300px"/>
+	</fieldset>
 <script type="text/javascript">
-function play() {
+
+var compteur=0  // Compteur pour que l'utilisateur ne puisse pas appuyer sur Play ou Stop plus de une fois d'affiler 
+
+function play(pseudo,game) {
+	if(compteur==0) {	
+		var req = newXMLHttpRequest();
+		req.open("POST", "servletgames", true);
+		req.onreadystatechange = getReadyStateHandler();
+		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		req.send("variable1="+pseudo+"&"+"variable2="+game+"&"+"variable3=play");	
+		compteur++ }
+	else {
+		alert('Vous êtes déjà en train de jouer')
+	}
+}
+
+function stop(pseudo,game) {
+	if(compteur==1) {
+		var req = newXMLHttpRequest();
+		req.open("POST", "servletgames", true);
+		req.onreadystatechange = getReadyStateHandler();
+		req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		req.send("variable1="+pseudo+"&"+"variable2="+game+"&"+"variable3=stop");	
+		compteur--;}
+	else {
+		alert('Vous devez commencez une partie')
+	}
+	 
+
+} 
+
 
 	function newXMLHttpRequest() {
 		  var xmlreq = false;
@@ -58,7 +90,6 @@ function play() {
 
 		         // Pass the XML payload of the response to the handler function.
 		         //responseXmlHandler(req.responseXML);
-		         alert('ok')
 
 		       } else {
 
@@ -69,71 +100,10 @@ function play() {
 		   }
 		 }
 	 
-	 
-		
-		
-		
-		
-		
-		
-		
-		
- 
-	 
-	 
-	 
-	 
-var req = newXMLHttpRequest();
-
-req.open("POST", "servletgames", true);
-req.onreadystatechange = getReadyStateHandler();
-req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-req.send("variable1=geoffrey");	
-
-
-	
-	
-	
-}
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-/*var i=0;
-
-function play(x,y) {
-	i++
-	if(i>1) {
-		alert("Vous êtes déjà en train de jouer")
-		i--;
-	}
-	else {
-		// ajout de la partie en base 
-	}
-	alert(x+y)
-}
-
-function stop() {
-	/*if(i!=1) {
-		alert("Vous n'avez pas commencé de partie")
-	}
-	else {
-		// modification de la base 
-		i--;
-	}
-}*/
-
-   
+  
 
 
 
