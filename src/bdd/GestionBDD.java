@@ -89,55 +89,7 @@ public class GestionBDD {
 		return r.next();
 	}
 
-	public List<String> executerTests( HttpServletRequest request ) {
-		Connection connexion = null;
-		ConfigBDD conf = ConfigBDD.getInstance();
-	    PreparedStatement statement = null;
-	    ResultSet resultat = null;
-	    /* Connexion à la base de données */
-	    try {
-	        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
-	        /* Préparation de la requete*/
-	        statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players;");
-
-	        resultat = statement.executeQuery();
-	 
-
-	        while ( resultat.next() ) {
-	            String pseudo = resultat.getString( "pseudo" );
-	            String emailUtilisateur = resultat.getString( "email" );
-	            String mdp = resultat.getString( "password" );
-	            String birthday = resultat.getString( "birthday" );
-
-	            messages.add( "Données retournées par la requête : pseudo = " + pseudo + ", email = " + emailUtilisateur
-	                    + ", motdepasse = "
-	                    + mdp + ", nom = " + birthday + "." );
-	        }
-	    } catch ( SQLException e ) {
-	        messages.add( "Erreur lors de la connexion : <br/>"
-	                + e.getMessage() );
-	    } finally {
-	        if ( resultat != null ) {
-	            try {
-	                resultat.close();
-	            } catch ( SQLException ignore ) {
-	            }
-	        }
-	        if ( statement != null ) {
-	            try {
-	                statement.close();
-	            } catch ( SQLException ignore ) {
-	            }
-	        }
-	        if ( connexion != null ) {
-	            try {
-	                connexion.close();
-	            } catch ( SQLException ignore ) {
-	            }
-	        }
-	    }
-	    return messages;
-	}
+	
 	
 	/**
 	 * enregisterJoueur : ajoute dans la BDD un nouveau joueur

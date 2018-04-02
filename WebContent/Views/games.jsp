@@ -9,7 +9,7 @@
 <body>
 	<h1>
 		Bonjour
-		<%=request.getParameter("pseudo")%>, amusez vous bien !
+		<%=request.getAttribute("pseudo")%>, amusez vous bien !
 	</h1>
 
 
@@ -107,16 +107,7 @@ function stop(pseudo,game) {
 		 }
 		 alert(x+y)
 		 }
-<<<<<<< HEAD
-=======
-	 
 
-
-
-  
-
-
->>>>>>> ad56d92e0941ba5dd85bd08457baf79211ed0bed
 
 		 function stop() {
 		 /*if(i!=1) {
