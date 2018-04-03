@@ -85,6 +85,115 @@ public class GestionBDD {
 	    return isUser;
 	}
 	
+	public boolean[] getStatus(HttpServletRequest request) throws SQLException {
+		boolean  [] status = new boolean[2];//Position 0 : isUser //Position 1  isAdmin
+		Connection connexion = null;
+	    PreparedStatement statement = null;
+	    ResultSet resultat = null;
+	    ConfigBDD conf = ConfigBDD.getInstance();
+	    String pseudo = (String) request.getParameter("pseudo");
+	    String mdp = (String) request.getParameter("password");
+	    
+	    if(pseudo != null && mdp != null) {
+	    	try {
+	    		Class.forName("com.mysql.jdbc.Driver");
+		        connexion = (Connection) DriverManager.getConnection(conf.getUrl(), conf.getUser(), conf.getPassword());
+	    		statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players where pseudo=? and password=?");
+		        statement.setString(1, pseudo);
+		        statement.setString(2,  mdp);
+		        resultat = statement.executeQuery();
+		        System.out.println(resultat.toString());
+	        } catch ( SQLException e ) {
+	        	e.printStackTrace();
+		    } catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				
+		        if ( resultat != null ) {
+		            try {
+		            	if(hasTuple(resultat)) {
+		            		status[0] = true;
+		            		status[1] = resultat.getBoolean("isAdmin");
+		            		System.out.println(status[0]+ " "+status[1] + " "+resultat.getBoolean("isAdmin"));
+		            	}
+		                resultat.close();
+		            } catch ( SQLException ignore ) {
+		            	ignore.printStackTrace();
+		            }
+		        }
+		        if ( statement != null ) {
+		            try {
+		                statement.close();
+		            } catch ( SQLException ignore ) {
+		            }
+		        }
+		        if ( connexion != null ) {
+		            try {
+		                connexion.close();
+		            } catch ( SQLException ignore ) {
+		            	ignore.printStackTrace();
+		            }
+		        }
+			}
+	    }
+	    return status;
+	}
+	
+	public boolean isAdmin(HttpServletRequest request) throws SQLException {
+		boolean isUser = false;
+		Connection connexion = null;
+	    PreparedStatement statement = null;
+	    ResultSet resultat = null;
+	    ConfigBDD conf = ConfigBDD.getInstance();
+	    boolean isAdmin = false;
+	    String pseudo = (String) request.getParameter("pseudo");
+	    String mdp = (String) request.getParameter("password");
+	    
+	    if(pseudo != null && mdp != null) {
+	    	try {
+	    		Class.forName("com.mysql.jdbc.Driver");
+		        connexion = (Connection) DriverManager.getConnection(conf.getUrl(), conf.getUser(), conf.getPassword());
+	    		statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players where pseudo=? and password=?");
+		        statement.setString(1, pseudo);
+		        statement.setString(2,  mdp);
+		        resultat = statement.executeQuery();
+		        System.out.println(resultat.toString());
+	        } catch ( SQLException e ) {
+	        	e.printStackTrace();
+		    } catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				
+		        if ( resultat != null ) {
+		            try {
+		            	if(hasTuple(resultat)) {
+		            	isAdmin= resultat.getBoolean("isAdmin");
+		            	}
+		                resultat.close();
+		            } catch ( SQLException ignore ) {
+		            	ignore.printStackTrace();
+		            }
+		        }
+		        if ( statement != null ) {
+		            try {
+		                statement.close();
+		            } catch ( SQLException ignore ) {
+		            }
+		        }
+		        if ( connexion != null ) {
+		            try {
+		                connexion.close();
+		            } catch ( SQLException ignore ) {
+		            	ignore.printStackTrace();
+		            }
+		        }
+			}
+	    }
+	    return isAdmin;
+	}
+	
 	public boolean hasTuple(ResultSet r) throws SQLException {
 		return r.next();
 	}
