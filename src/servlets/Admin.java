@@ -32,8 +32,7 @@ public class Admin extends HttpServlet {
         this.bdd = GestionBDD.getInstance();
   	    this.games = bdd.getGames();
   	    this.players = bdd.getPlayers();
-  	   this.matchs = bdd.getMatchs();
-        // TODO Auto-generated constructor stub
+  	    this.matchs = bdd.getMatchs();
     }
     
     public String test() {
