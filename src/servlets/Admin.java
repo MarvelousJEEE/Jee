@@ -22,7 +22,8 @@ public class Admin extends HttpServlet {
 	private ResultSet players; 
 	private ResultSet matchs; 
 	private GestionBDD bdd;
-	public static final String redirection = "/Views/admin.jsp";
+	public static final String vue = "/Views/admin.jsp";
+	public static final String redirection = "/signin";
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -67,16 +68,13 @@ public class Admin extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		SessionTools.allowAdmin(this, request, response, vue, redirection);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
 			String option = (String) request.getParameter("option");
 		
 		  if ("delete".equals(option) ) {			 
@@ -86,12 +84,7 @@ public class Admin extends HttpServlet {
 		   if( "add".equals(option) ) {
 				  bdd.addGame(request);	 
 			  }
-	
-		   
-			this.getServletContext().getRequestDispatcher( redirection ).forward( request, response );
-			
-	
-		doGet(request, response);
+			SessionTools.allowAdmin(this, request, response, vue, redirection);
 	}
 
 }
