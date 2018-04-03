@@ -77,7 +77,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`Matchs` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`Matchs` (
-  `idMatch` INT NOT NULL,
+  `idMatch` INT NOT NULL AUTO_INCREMENT
   `pseudo` VARCHAR(20) NOT NULL,
   `gameName` VARCHAR(45) NOT NULL,
   `hBegin` DATETIME NULL,
@@ -107,10 +107,10 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `mydb`;
-INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`, `isAdmin`) VALUES ('MacFly', '456', '1999-05-15', 'mcfly@gmail.com', 0, '2018-03-12', false);
-INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`, `isAdmin`) VALUES ('MacChouffe', '213', '1995-03-12', 'macchouffe@gmal.com', 0, '2018-03-13', false);
-INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`, `isAdmin`) VALUES ('MacGros', '789', '1996-04-11', 'macggros@gmail.com', 0, '2018-03-15', false);
-INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`, `isAdmin`) VALUES ('Louis', '123', '1996-04-11', 'loui@gmail.com', 0, '2018-03-16', true);
+INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`, `isAdmin`) VALUES ('MacFly', '456', '1999-05-15', 'mcfly@gmail.com', 0, '2018-03-12', 'false');
+INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`, `isAdmin`) VALUES ('MacChouffe', '213', '1995-03-12', 'macchouffe@gmal.com', 0, '2018-03-13', 'false');
+INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`, `isAdmin`) VALUES ('MacGros', '789', '1996-04-11', 'macggros@gmail.com', 0, '2018-03-15', 'false');
+INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`, `isAdmin`) VALUES ('Louis', '123', '1996-04-11', 'loui@gmail.com', 0, '2018-03-16', 'true');
 
 COMMIT;
 
