@@ -16,15 +16,15 @@ import beans.User;
 /**
  * Servlet implementation class ServletGames
  */
-@WebServlet("/servletgames")
-public class ServletGames extends HttpServlet {
+@WebServlet("/games")
+public class games extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public static final String VUE = "/Views/games.jsp";
-    public static final String redirection = "/Views/signIn.jsp";
+    public static final String redirection = "/signin";
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ServletGames() {
+    public games() {
         super();
     }
 
@@ -32,13 +32,7 @@ public class ServletGames extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if(SessionTools.isUser(request)) {
-			request.setAttribute("pseudo", SessionTools.getCookie(request, "user").getValue());
-			this.getServletContext().getRequestDispatcher(VUE).forward( request, response );
-		}else {
-			this.getServletContext().getRequestDispatcher(redirection).forward( request, response );
-
-		}
+		SessionTools.allowUser(this, request, response, VUE, redirection);
 
 	}
 

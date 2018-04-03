@@ -23,8 +23,8 @@ import beans.User;
 public class SignIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public static final String VUE = "/Views/signIn.jsp";
-    public static final String redirection = "/Views/games.jsp";
-    public static final String redirection2 = "/Views/admin.jsp";
+    public static final String redirection = "/servletgames";
+    public static final String redirection2 = "/admin";
     public static final String ATT_SESSION_USER = "users";
     
     
@@ -51,18 +51,22 @@ public class SignIn extends HttpServlet {
 			if(isAdmin) {
 				u.setAdmin(true);	
 			} 
+			
+			//Creation de la session
 			HttpSession session = request.getSession();
 			session.setAttribute( u.getPseudo(), u);
 			Cookie cookie = new Cookie( "user", u.getPseudo() );
 			cookie.setMaxAge(60 * 60 * 24 * 365);
 			response.addCookie( cookie );
 			
-			request.setAttribute("user", u.getPseudo());
-			System.out.println(isAdmin);
+			
+			request.setAttribute("pseudo", u.getPseudo());
+
 			if(isAdmin) {
-				this.getServletContext().getRequestDispatcher( redirection2 ).forward( request, response );
+				//Pour rediriger vers une autre servlet
+				response.sendRedirect( request.getContextPath() + redirection2);
 			}else {
-				this.getServletContext().getRequestDispatcher( redirection ).forward( request, response );
+				response.sendRedirect( request.getContextPath() + redirection);
 			}
 		}else {
 			//TODO: message d'erreur => demander de se reconnecter
