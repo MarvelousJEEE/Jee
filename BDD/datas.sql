@@ -110,7 +110,7 @@ USE `mydb`;
 INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`, `isAdmin`) VALUES ('MacFly', '456', '1999-05-15', 'mcfly@gmail.com', 0, '2018-03-12', false);
 INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`, `isAdmin`) VALUES ('MacChouffe', '213', '1995-03-12', 'macchouffe@gmal.com', 0, '2018-03-13', false);
 INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`, `isAdmin`) VALUES ('MacGros', '789', '1996-04-11', 'macggros@gmail.com', 0, '2018-03-15', false);
-INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`, `isAdmin`) VALUES ('Louis', '123', '1996-04-11', 'loui@gmail.com', 0, '2018-03-16', false);
+INSERT INTO `mydb`.`Players` (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`, `isAdmin`) VALUES ('Louis', '123', '1996-04-11', 'loui@gmail.com', 0, '2018-03-16', true);
 
 COMMIT;
 
