@@ -33,6 +33,7 @@ public class SignIn extends HttpServlet {
     }
     
     public void doPost(HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException {
+    	SessionTools.logOut(request, response);
     	GestionBDD bdd = GestionBDD.getInstance();
     	boolean isUser=false;
     	boolean isAdmin = false;
@@ -45,23 +46,7 @@ public class SignIn extends HttpServlet {
 			e.printStackTrace();
 		}
 		if(isUser) {
-			User u = new User();
-			u.setPseudo(request.getParameter("pseudo"));
-			u.setAdmin(false);
-			if(isAdmin) {
-				u.setAdmin(true);	
-			} 
-			
-			//Creation de la session
-			HttpSession session = request.getSession();
-			session.setAttribute( u.getPseudo(), u);
-			Cookie cookie = new Cookie( "user", u.getPseudo() );
-			cookie.setMaxAge(60 * 60 * 24 * 365);
-			response.addCookie( cookie );
-			
-			
-			request.setAttribute("pseudo", u.getPseudo());
-
+			SessionTools.logIn(request, response, isAdmin);
 			if(isAdmin) {
 				//Pour rediriger vers une autre servlet
 				response.sendRedirect( request.getContextPath() + redirection2);
@@ -76,7 +61,8 @@ public class SignIn extends HttpServlet {
     
     
     public void doGet( HttpServletRequest request, HttpServletResponse response ) throws ServletException, IOException {
-		GestionBDD bdd = GestionBDD.getInstance();
+		SessionTools.logOut(request, response);
+    	GestionBDD bdd = GestionBDD.getInstance();
 	    boolean isUser=false;
 		try {
 			isUser = bdd.isUser(request);

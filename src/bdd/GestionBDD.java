@@ -51,7 +51,6 @@ public class GestionBDD {
 		        statement.setString(1, pseudo);
 		        statement.setString(2,  mdp);
 		        resultat = statement.executeQuery();
-		        System.out.println(resultat.toString());
 	        } catch ( SQLException e ) {
 	        	e.printStackTrace();
 		    } catch (ClassNotFoundException e) {
@@ -102,7 +101,6 @@ public class GestionBDD {
 		        statement.setString(1, pseudo);
 		        statement.setString(2,  mdp);
 		        resultat = statement.executeQuery();
-		        System.out.println(resultat.toString());
 	        } catch ( SQLException e ) {
 	        	e.printStackTrace();
 		    } catch (ClassNotFoundException e) {
@@ -141,7 +139,6 @@ public class GestionBDD {
 	}
 	
 	public boolean isAdmin(HttpServletRequest request) throws SQLException {
-		boolean isUser = false;
 		Connection connexion = null;
 	    PreparedStatement statement = null;
 	    ResultSet resultat = null;

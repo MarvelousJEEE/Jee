@@ -47,7 +47,6 @@ public class SessionTools {
 		String pseudo = c.getValue();
 		HttpSession session = request.getSession(); 
 		User u = (User)session.getAttribute(pseudo);
-		System.out.println("***"+u.toString());
 		if(u==null) {
 			return false;
 			
@@ -58,6 +57,32 @@ public class SessionTools {
 				return false;
 			}
 		}
+	}
+	
+	public static void logIn(HttpServletRequest request, HttpServletResponse response, boolean isAdmin) {
+		//Création du bean utilisateur
+		User u = new User();
+		u.setPseudo(request.getParameter("pseudo"));
+		u.setAdmin(isAdmin);
+		
+		//Creation de la session
+		HttpSession session = request.getSession();
+		session.setAttribute( u.getPseudo(), u);
+		
+		//Création du cookie
+		Cookie cookie = new Cookie( "user", u.getPseudo() );
+		cookie.setMaxAge(60 * 60 * 24 * 365);
+		response.addCookie( cookie );
+		
+		request.setAttribute("pseudo", u.getPseudo());
+	}
+	
+	public static void logOut(HttpServletRequest request, HttpServletResponse response) {
+		Cookie c = getCookie(request, "user");
+		String pseudo = c.getValue();
+		HttpSession session = request.getSession();
+		session.removeAttribute(pseudo);
+		
 	}
 	
 	public static void allowUser(HttpServlet servlet, HttpServletRequest request,HttpServletResponse response, String vue, String redirection) throws ServletException, IOException {

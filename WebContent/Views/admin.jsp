@@ -29,7 +29,7 @@
 					<li><a href="#work">Add Game </a></li>
 					<li><a href="#portfolio"> Players </a></li>
 					<li><a href="#contact"> Plays </a></li>
-					<li><a href="#">LogOut</a></li>
+					<li><a href="#" id="logout">LogOut</a></li>
 				</ul>
 			</nav>
 
@@ -202,6 +202,7 @@
 			</div>
 
 <!-- Scripts -->
+			<script src="<%=request.getContextPath()%>/assets/js/logout.js"></script>
 			<script src="<%=request.getContextPath()%>/assets/js/jquery.min.js"></script>
 			<script src="<%=request.getContextPath()%>/assets/js/jquery.scrolly.min.js"></script>
 			<script src="<%=request.getContextPath()%>/assets/js/skel.min.js"></script>
