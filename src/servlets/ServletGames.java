@@ -53,7 +53,7 @@ public class ServletGames extends HttpServlet {
 			GestionBDD bdd = GestionBDD.getInstance();
 			bdd.enregisterPartie(pseudo,game);
 		}
-		if(type.equals("stop") & !(pseudo.equals(""))) {
+		else if(type.equals("stop") & !(pseudo.equals(""))) {
 			GestionBDD bdd = GestionBDD.getInstance();
 			bdd.enregistrerStop(pseudo,game);
 			}
