@@ -47,6 +47,7 @@ public class SessionTools {
 		String pseudo = c.getValue();
 		HttpSession session = request.getSession(); 
 		User u = (User)session.getAttribute(pseudo);
+		System.out.println("***"+u.toString());
 		if(u==null) {
 			return false;
 			
@@ -54,7 +55,7 @@ public class SessionTools {
 			if(u.isAdmin()) {
 				return true;
 			}else {
-				return true;
+				return false;
 			}
 		}
 	}
@@ -69,6 +70,7 @@ public class SessionTools {
 	}
 	
 	public static void allowAdmin(HttpServlet servlet, HttpServletRequest request,HttpServletResponse response, String vue, String redirection) throws ServletException, IOException {
+		System.out.println(SessionTools.isAdmin(request));
 		if(SessionTools.isAdmin(request)) {
 			request.setAttribute("pseudo", SessionTools.getCookie(request, "user").getValue());
 			servlet.getServletContext().getRequestDispatcher(vue).forward( request, response );

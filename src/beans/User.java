@@ -21,5 +21,8 @@ public class User {
 		this.isAdmin = isAdmin;
 	}
 	
+	public String toString() {
+		return pseudo + " "+isAdmin;
+	}
 	
 }

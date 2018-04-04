@@ -17,14 +17,14 @@ import beans.User;
  * Servlet implementation class ServletGames
  */
 @WebServlet("/games")
-public class games extends HttpServlet {
+public class Games extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public static final String VUE = "/Views/games.jsp";
     public static final String redirection = "/signin";
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public games() {
+    public Games() {
         super();
     }
 
