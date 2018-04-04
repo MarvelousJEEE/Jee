@@ -37,7 +37,7 @@
 				<article class="container" id="top">
 					<div class="row">
 						<div class="4u 12u(mobile)">
-							<span class="image fit"><img src="<%=request.getContextPath()%>/images/pic00.jpg" alt="" /></span>
+							<span class="image fit"><img src="<%=request.getContextPath()%>/images/games.jpg" alt="" /></span>
 						</div>
 						<div class="8u 12u(mobile)">
 				
@@ -117,11 +117,19 @@
 							    </tr>
 							  </thead>
 							  <tbody>
-							  <% int k = 0; 			
+							  <% int k = 0; 
+							  	 String ban;
 							  %>
 							   <%	while (ad.getPlayers().next()) { 
 							    k++;
 							   %>
+							    <%
+								      if( "1".equals( ad.getPlayers().getString("ban")  )){
+								    	ban = "Banned";								    								    	  
+								      }else {
+								    	ban = "Athorized";								   
+								      }   
+								      %>
 							  
 							    <tr>
 							      <th scope="row"><%=k %></th>
@@ -129,7 +137,15 @@
 							         <td> <%= ad.getPlayers().getString("subscription") %> </td>
 							      
 								  <td> N.A </td> 
-							     <td> <button  type="button" class="btn btn-primary btn-sm">  <%= ad.getPlayers().getString("ban") %> </button>
+							     <td> 
+							     
+							     
+							     	<form action="/J2EE/admin" method="post">
+										<input type="hidden" value= <%= ad.getPlayers().getString("pseudo") %> name="pseudo" />
+										<input type="hidden" value="ban"  name="option" />
+										<button  type="submit" class="btn btn-primary btn-sm" value= <%= ad.getPlayers().getString("ban") %> name="ban"  >  <%= ban %> </button>	 	   
+										</form>
+			    
 							    </tr>
 							    
 							    <% } %>
@@ -143,10 +159,9 @@
 			</div>
 
 
-
-		<!-- Contact -->
-			<div class="wrapper style4">
-				<article id="contact" class="container 75%">
+		<!-- CurrentPlay  -->
+			<div class="wrapper style2">
+				<article id="work">
 					<header>
 						<h2> Current plays  </h2>
 						<p>You can find here all current plays and end them as you please  </p>
@@ -169,26 +184,83 @@
 							  <tbody>
 							  <% int i = 0; 			
 							  %>
-							   <%	while (ad.getMatchs().next()) { 
-							    i++;
+							   <%
+							   	while (ad.getCurrentMatchs().next()) { 
+							   					    i++;
 							   %>
 							
 							    <tr>
-							      <th scope="row"><%=i %></th>
-							      <td><%= ad.getMatchs().getString("gameName") %></td>
-							      <td><%= ad.getMatchs().getString("pseudo") %></td>
-							          <td><%= ad.getMatchs().getString("hBegin") %></td>
+							      <th scope="row"><%=i%></th>
+							      <td><%=ad.getCurrentMatchs().getString("gameName")%></td>
+							      <td><%=ad.getCurrentMatchs().getString("pseudo")%></td>
+							          <td><%=ad.getCurrentMatchs().getString("hBegin")%></td>
 							      
-							     <td> <button  type="button" class="btn btn-primary btn-sm">  End then game  </button>
+							     <td>
+							     	<form action="/J2EE/admin" method="post">
+										<input type="hidden" value="end"  name="option" />
+										<button  type="submit" class="btn btn-primary btn-sm" value= <%= ad.getCurrentMatchs().getString("idMatch") %> name="id"  >  End the game </button>	 	   
+										</form>
+							      </td>
+							    </tr>
+							    
+							    <%   	}    %>
+							 
+							  </tbody>
+						</table>
+						
+						
+				</div>
+				</article>
+				
+						
+						
+					</div>
+
+
+		<!-- Finished Plays  -->
+			<div class="wrapper style4">
+				<article id="contact" class="container 75%">
+					<header>
+						<h2> Finished plays  </h2>
+						<p>Here is an history of all plays  </p>
+					</header>
+					<div>
+					
+						<table class="table table-striped table-dark">
+							  <thead>
+							    <tr>
+			    
+							    	
+							      <th scope="col">#</th>
+							      <th scope="col">Game</th>
+							      <th scope="col"> Pseudo </th>
+							      <th scope="col">Start</th>
+							      <th scope="col">End</th>
+							     
+							    </tr>
+							  </thead>
+							  <tbody>
+							  <%
+							  	int j = 0;
+							  %>
+							   <%
+							   	while (ad.getFinishedMatchs().next()) { 
+							   					    j++;
+							   %>
+							
+							    <tr>
+							      <th scope="row"><%=j%></th>
+							      <td><%=ad.getFinishedMatchs().getString("gameName")%></td>
+							      <td><%=ad.getFinishedMatchs().getString("pseudo")%></td>
+							      <td><%=ad.getFinishedMatchs().getString("hBegin")%></td>     
+							     <td><%=ad.getFinishedMatchs().getString("hEnd")%></td>
 							    </tr>
 							    
 							    <% } %>
 							 
 							  </tbody>
 						</table>
-						
-						
-						
+							
 						
 						
 					</div>
