@@ -23,7 +23,7 @@ import beans.User;
 public class SignIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public static final String VUE = "/Views/signIn.jsp";
-    public static final String redirection = "/servletgames";
+    public static final String redirection = "/games";
     public static final String redirection2 = "/admin";
     public static final String ATT_SESSION_USER = "users";
     
