@@ -85,59 +85,120 @@ public class GestionBDD {
 	    return isUser;
 	}
 	
+	public boolean[] getStatus(HttpServletRequest request) throws SQLException {
+		boolean  [] status = new boolean[2];//Position 0 : isUser //Position 1  isAdmin
+		Connection connexion = null;
+	    PreparedStatement statement = null;
+	    ResultSet resultat = null;
+	    ConfigBDD conf = ConfigBDD.getInstance();
+	    String pseudo = (String) request.getParameter("pseudo");
+	    String mdp = (String) request.getParameter("password");
+	    
+	    if(pseudo != null && mdp != null) {
+	    	try {
+	    		Class.forName("com.mysql.jdbc.Driver");
+		        connexion = (Connection) DriverManager.getConnection(conf.getUrl(), conf.getUser(), conf.getPassword());
+	    		statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players where pseudo=? and password=?");
+		        statement.setString(1, pseudo);
+		        statement.setString(2,  mdp);
+		        resultat = statement.executeQuery();
+		        System.out.println(resultat.toString());
+	        } catch ( SQLException e ) {
+	        	e.printStackTrace();
+		    } catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				
+		        if ( resultat != null ) {
+		            try {
+		            	if(hasTuple(resultat)) {
+		            		status[0] = true;
+		            		status[1] = resultat.getBoolean("isAdmin");
+		            		System.out.println(status[0]+ " "+status[1] + " "+resultat.getBoolean("isAdmin"));
+		            	}
+		                resultat.close();
+		            } catch ( SQLException ignore ) {
+		            	ignore.printStackTrace();
+		            }
+		        }
+		        if ( statement != null ) {
+		            try {
+		                statement.close();
+		            } catch ( SQLException ignore ) {
+		            }
+		        }
+		        if ( connexion != null ) {
+		            try {
+		                connexion.close();
+		            } catch ( SQLException ignore ) {
+		            	ignore.printStackTrace();
+		            }
+		        }
+			}
+	    }
+	    return status;
+	}
+	
+	public boolean isAdmin(HttpServletRequest request) throws SQLException {
+		boolean isUser = false;
+		Connection connexion = null;
+	    PreparedStatement statement = null;
+	    ResultSet resultat = null;
+	    ConfigBDD conf = ConfigBDD.getInstance();
+	    boolean isAdmin = false;
+	    String pseudo = (String) request.getParameter("pseudo");
+	    String mdp = (String) request.getParameter("password");
+	    
+	    if(pseudo != null && mdp != null) {
+	    	try {
+	    		Class.forName("com.mysql.jdbc.Driver");
+		        connexion = (Connection) DriverManager.getConnection(conf.getUrl(), conf.getUser(), conf.getPassword());
+	    		statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players where pseudo=? and password=?");
+		        statement.setString(1, pseudo);
+		        statement.setString(2,  mdp);
+		        resultat = statement.executeQuery();
+		        System.out.println(resultat.toString());
+	        } catch ( SQLException e ) {
+	        	e.printStackTrace();
+		    } catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				
+		        if ( resultat != null ) {
+		            try {
+		            	if(hasTuple(resultat)) {
+		            	isAdmin= resultat.getBoolean("isAdmin");
+		            	}
+		                resultat.close();
+		            } catch ( SQLException ignore ) {
+		            	ignore.printStackTrace();
+		            }
+		        }
+		        if ( statement != null ) {
+		            try {
+		                statement.close();
+		            } catch ( SQLException ignore ) {
+		            }
+		        }
+		        if ( connexion != null ) {
+		            try {
+		                connexion.close();
+		            } catch ( SQLException ignore ) {
+		            	ignore.printStackTrace();
+		            }
+		        }
+			}
+	    }
+	    return isAdmin;
+	}
+	
 	public boolean hasTuple(ResultSet r) throws SQLException {
 		return r.next();
 	}
 
-	public List<String> executerTests( HttpServletRequest request ) {
-		Connection connexion = null;
-		ConfigBDD conf = ConfigBDD.getInstance();
-	    PreparedStatement statement = null;
-	    ResultSet resultat = null;
-	    /* Connexion à la base de données */
-	    try {
-	        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
-	        /* Préparation de la requete*/
-	        statement = (PreparedStatement) connexion.prepareStatement("SELECT * FROM Players;");
-
-	        resultat = statement.executeQuery();
-	 
-
-	        while ( resultat.next() ) {
-	            String pseudo = resultat.getString( "pseudo" );
-	            String emailUtilisateur = resultat.getString( "email" );
-	            String mdp = resultat.getString( "password" );
-	            String birthday = resultat.getString( "birthday" );
-
-	            messages.add( "Données retournées par la requête : pseudo = " + pseudo + ", email = " + emailUtilisateur
-	                    + ", motdepasse = "
-	                    + mdp + ", nom = " + birthday + "." );
-	        }
-	    } catch ( SQLException e ) {
-	        messages.add( "Erreur lors de la connexion : <br/>"
-	                + e.getMessage() );
-	    } finally {
-	        if ( resultat != null ) {
-	            try {
-	                resultat.close();
-	            } catch ( SQLException ignore ) {
-	            }
-	        }
-	        if ( statement != null ) {
-	            try {
-	                statement.close();
-	            } catch ( SQLException ignore ) {
-	            }
-	        }
-	        if ( connexion != null ) {
-	            try {
-	                connexion.close();
-	            } catch ( SQLException ignore ) {
-	            }
-	        }
-	    }
-	    return messages;
-	}
+	
 	
 	/**
 	 * enregisterJoueur : ajoute dans la BDD un nouveau joueur
@@ -161,7 +222,7 @@ public class GestionBDD {
 	        resultat = statement.executeQuery();
 	        
 	        if(!resultat.next()) {
-		        statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO Players (`pseudo`, `password`, `birthday`, `email`, 0) VALUES (?,?,?,?)");
+		        statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO Players (`pseudo`, `password`, `birthday`, `email`, `ban`, 'isAdmin') VALUES (?,?,?,?,0, 'false')");
 		        statement.setString(1, pseudo);
 		        statement.setString(2, password);
 		        statement.setString(3, dateOfBirth);
@@ -181,6 +242,49 @@ public class GestionBDD {
 		return false;
 	}
 	
+
+	/**
+	 * enregisterPartie : ajoute dans la BDD une nouvelle Partie
+	 * @param pseudo
+	 * @param game
+	 * @return succes/echec
+	 */
+	public void enregisterPartie(String pseudo, String game) {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+	    /* Connexion à la base de données */
+	    try {
+	        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+	        statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO Matchs (`pseudo`, `gameName`, `hBegin`) VALUES (?,?,CURRENT_TIMESTAMP());");
+	        statement.setString(1, pseudo);
+	        statement.setString(2, game);
+	        statement.execute();
+	        statement.close();
+	        System.out.println("Le jeu va commencé");
+	    } catch (SQLException e ) {
+		   	e.printStackTrace();
+		}
+	}
+	
+	public void enregistrerStop(String pseudo, String game) {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+	    /* Connexion à la base de données */
+	    try {
+	        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+	        statement = (PreparedStatement) connexion.prepareStatement("UPDATE Matchs SET hEnd=CURRENT_TIMESTAMP() WHERE idMatch in (SELECT * FROM (SELECT max(idMatch) FROM Matchs WHERE pseudo=?) AS tmp) ;");
+	        statement.setString(1,pseudo);
+	        statement.execute();
+	        statement.close();
+	        System.out.println("Le partie est terminée");
+	    } catch (SQLException e ) {
+		   	e.printStackTrace();
+		}
+	}
+
+
 	public ResultSet getGames() {
 		Connection connexion = null;
 		ConfigBDD conf = ConfigBDD.getInstance();
@@ -293,3 +397,4 @@ public class GestionBDD {
 	
 	
 }
+
