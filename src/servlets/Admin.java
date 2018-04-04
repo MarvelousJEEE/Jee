@@ -74,7 +74,8 @@ public class Admin extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-			String option = (String) request.getParameter("option");
+		SessionTools.allowAdmin(this, request, response, vue, redirection);	
+		String option = (String) request.getParameter("option");
 		
 		  if ("delete".equals(option) ) {			 
 				bdd.deleteGame(request);				 
