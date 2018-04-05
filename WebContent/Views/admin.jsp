@@ -1,26 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
 <%@ page import="servlets.Admin"%>
 <% Admin ad = new Admin();%>
+<%@include file="header.jsp"%>
 
-
-
-<html>
-<html>
-	<head>
-		<title>Miniport by HTML5 UP</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="../assets/css/main.css" />
-		<link rel="stylesheet" href="<%=request.getContextPath()%>/assets/css/main.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-	</head>
-	<body>
 
 		<!-- Nav -->
 			<nav id="nav">
@@ -29,6 +10,7 @@
 					<li><a href="#work">Add Game </a></li>
 					<li><a href="#portfolio"> Players </a></li>
 					<li><a href="#contact"> Plays </a></li>
+					<li><a href="#copyright"> Contactez-nous </a></li>
 					<li><a href="#" id="logout">LogOut</a></li>
 				</ul>
 			</nav>
@@ -146,7 +128,7 @@
 
 
 		<!-- Contact -->
-			<div class="wrapper style4">
+			<div class="wrapper style3">
 				<article id="contact" class="container 75%">
 					<header>
 						<h2> Current plays  </h2>
@@ -187,32 +169,11 @@
 							 
 							  </tbody>
 						</table>
-						
-						
-						
-						
-						
 					</div>
-					<footer>
-						<ul id="copyright">
-							<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-						</ul>
-					</footer>
 				</article>
 			</div>
+<%@include file="footer.jsp"%>
 
-<!-- Scripts -->
-			<script src="<%=request.getContextPath()%>/assets/js/logout.js"></script>
-			<script src="<%=request.getContextPath()%>/assets/js/jquery.min.js"></script>
-			<script src="<%=request.getContextPath()%>/assets/js/jquery.scrolly.min.js"></script>
-			<script src="<%=request.getContextPath()%>/assets/js/skel.min.js"></script>
-			<script src="<%=request.getContextPath()%>/assets/js/skel-viewport.min.js"></script>
-			<script src="<%=request.getContextPath()%>/assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="<%=request.getContextPath()%>/assets/js/main.js"></script>
 
-	</body>
-</html>
-	
 	
 	

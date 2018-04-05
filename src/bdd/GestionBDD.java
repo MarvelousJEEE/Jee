@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
 
 public class GestionBDD {
 	
@@ -219,7 +220,7 @@ public class GestionBDD {
 	        resultat = statement.executeQuery();
 	        
 	        if(!resultat.next()) {
-		        statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO Players (`pseudo`, `password`, `birthday`, `email`, `ban`, 'isAdmin') VALUES (?,?,?,?,0, 'false')");
+	        	statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO Players (`pseudo`, `password`, `birthday`, `email`, `ban`, `subscription`, `isAdmin`) VALUES (?,?,?,?,0,curdate(),0);");
 		        statement.setString(1, pseudo);
 		        statement.setString(2, password);
 		        statement.setString(3, dateOfBirth);
