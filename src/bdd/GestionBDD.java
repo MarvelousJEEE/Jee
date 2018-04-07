@@ -1,16 +1,20 @@
 package bdd;
 
-import java.sql.Date;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.PreparedStatement;
 import com.mysql.jdbc.Statement;
+import java.util.*;
+
 
 public class GestionBDD {
 	
@@ -346,7 +350,6 @@ public class GestionBDD {
 		    } catch (SQLException e ) {
 		    	e.printStackTrace();
 		    }
-		   
 		
 		 
 	}
@@ -371,7 +374,7 @@ public class GestionBDD {
 	
 	
 	
-	public ResultSet getMatchs() {
+	public ResultSet getCurrentMatchs() {
 		Connection connexion = null;
 		ConfigBDD conf = ConfigBDD.getInstance();
 	    PreparedStatement statement = null;
@@ -390,6 +393,90 @@ public class GestionBDD {
 	}
 	
 
+	public ResultSet getFinishedMatchs() {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+
+	    /* Connexion à la base de données */
+	    try {
+	        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+	        /* Verification pseudo */
+	
+	        statement = (PreparedStatement) connexion.prepareStatement("select * from Matchs where hEnd is not  NULL;");
+	     
+	      return( statement.executeQuery());
+	                      
+	    } catch (SQLException e ) {
+	    	e.printStackTrace();
+	    }
+		return null;
+	}
+	
+
+
+	
+	public void ban(HttpServletRequest request) {
+		
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+	    String pseudo = (String) request.getParameter("pseudo");
+		   String ban = (String) request.getParameter("ban");
+		   int abs = Math.abs( Integer.parseInt(ban) -1);
+		   ban = Integer.toString(abs);
+		
+		   try {
+		        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+
+				    statement = (PreparedStatement) connexion.prepareStatement("Update Players set ban = ? where pseudo = ?  ");
+			        statement.setString(1, ban);
+			        statement.setString(2, pseudo);
+			        statement.execute();
+			        statement.close();
+			   
+		                      
+		    } catch (SQLException e ) {
+		    	e.printStackTrace();
+		    }
+		
+		 
+	}
+	
+	
+	public void end(HttpServletRequest request) {
+		
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+	    String id = (String) request.getParameter("id");
+	
+		  Date dNow = new Date();
+	      SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
+	     String d = ft.format(dNow) ;
+			   
+		   try {
+		        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+
+				    statement = (PreparedStatement) connexion.prepareStatement("Update Matchs set hEnd = ? where idMatch = ? ;");
+			        statement.setString(1, d);
+			        statement.setString(2, id);
+			        statement.execute();
+			        statement.close();
+			   	                      
+		} catch (SQLException e ) {
+		    	e.printStackTrace();
+	    }
+		
+	
+		 
+	}
+	
+	
+	
+	
+	
+	
 
 	
 	
