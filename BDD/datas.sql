@@ -79,11 +79,15 @@ DROP TABLE IF EXISTS `mydb`.`Matchs` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`Matchs` (
 <<<<<<< HEAD
+<<<<<<< HEAD
   `idMatch` INT NOT NULL,
   `Games_id` VARCHAR(45) NOT NULL,
 =======
   `idMatch` INT NOT NULL AUTO_INCREMENT,
 >>>>>>> ilias
+=======
+  `idMatch` INT NOT NULL AUTO_INCREMENT,
+>>>>>>> gsaldo
   `pseudo` VARCHAR(20) NOT NULL,
   `hBegin` DATETIME NULL,
   `hEnd` DATETIME NULL,

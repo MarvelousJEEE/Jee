@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
+
+import com.mysql.jdbc.ResultSetMetaData;
 
 import bdd.ConfigBDD;
 import bdd.GestionBDD;
@@ -26,10 +30,12 @@ public class SignIn extends HttpServlet {
     public static final String redirection = "/games";
     public static final String redirection2 = "/admin";
     public static final String ATT_SESSION_USER = "users";
-    
+    private GestionBDD bdd;
+    private ResultSet games;
     
     public SignIn() {
         super();
+        this.bdd = GestionBDD.getInstance();
     }
     
     public void doPost(HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException {
@@ -37,7 +43,7 @@ public class SignIn extends HttpServlet {
     	GestionBDD bdd = GestionBDD.getInstance();
     	boolean isUser=false;
     	boolean isAdmin = false;
-    	boolean[] status;
+    	boolean[] status;	
 		try {
 			status = bdd.getStatus(request);
 			isUser =status[0];
@@ -47,6 +53,12 @@ public class SignIn extends HttpServlet {
 		}
 		if(isUser) {
 			SessionTools.logIn(request, response, isAdmin);
+			String[] tableGames = new String[0];
+			tableGames = this.getTableGames();
+			request.setAttribute("Games", tableGames);
+			User u = new User();
+			u.setPseudo(request.getParameter("pseudo"));
+			u.setAdmin(false);
 			if(isAdmin) {
 				//Pour rediriger vers une autre servlet
 				response.sendRedirect( request.getContextPath() + redirection2);
@@ -75,4 +87,29 @@ public class SignIn extends HttpServlet {
 		       this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 		}
     }
+    
+    public String[] getTableGames() {
+  	    this.games = bdd.getGames();
+  	    try {
+  	    		int i;
+  	    		this.games.last();
+			 //on récupère le numéro de la ligne 
+	  	    int nombreLignes = this.games.getRow(); 
+	  	    //on replace le curseur avant la première ligne 
+	  	    this.games.beforeFirst();
+	  	    this.games.next();
+			String[] tableGames = new String[nombreLignes];
+			for(i=0;i<nombreLignes;i++) {
+				tableGames[i]=this.games.getNString("infos");
+				this.games.next();
+			}
+	  	    return tableGames;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+  	    
+    }
+ 
 }
