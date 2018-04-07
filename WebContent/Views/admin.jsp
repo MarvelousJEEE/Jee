@@ -1,6 +1,13 @@
 <%@ page import="servlets.Admin"%>
-<% Admin ad = new Admin();%>
 <%@include file="header.jsp"%>
+<%@ page import="java.sql.ResultSet" %>
+<%@ page import="bdd.GestionBDD" %>
+<%
+	GestionBDD bdd = GestionBDD.getInstance();
+	ResultSet games = bdd.getGames();
+	ResultSet players = bdd.getPlayers();
+	ResultSet matchs = bdd.getMatchs();
+%>
 
 
 		<!-- Nav -->
@@ -30,9 +37,9 @@
 						<ol>
 								<% String show;
 							      String hide; %>	
-								<%	while (ad.getGames().next()) { %>
+								<%	while (games.next()) { %>
 								      <%
-								      if( "1".equals( ad.getGames().getString("show")  )){
+								      if(games.getBoolean("show")){
 								    	show = "checked";
 								    	 hide ="";								    	  
 								      }else {
@@ -42,9 +49,9 @@
 								      %>
 									<li>  
 										<form action="/J2EE/admin" method="post">
-										<input type="hidden" value= <%= ad.getGames().getString("name") %> name="name" />
-						    				 <% out.print( ad.getGames().getString("infos")) ; 	 %>  
-						 	                 <%	 out.print( "   " + ad.getGames().getString("release")) ;	 %>  
+										<label><%= games.getString("name") %></label><input type="hidden" value= <%= games.getString("name") %> name="name" />
+										
+						    				 <%= games.getString("infos") + "   " + games.getString("release")%> 
 						 	                 <label > <input type="radio" name="option" value="show" <%=show %>>Show</label>
 											<label><input type="radio" name="option" value="hide" <%=hide %>>  Hide</label>
 											<label ><input type="radio" name="option" value="delete" >Delete</label>
@@ -102,17 +109,17 @@
 							  <tbody>
 							  <% int k = 0; 			
 							  %>
-							   <%	while (ad.getPlayers().next()) { 
+							   <%	while (players.next()) { 
 							    k++;
 							   %>
 							  
 							    <tr>
 							      <th scope="row"><%=k %></th>
-							      <td> <%= ad.getPlayers().getString("pseudo") %> </td>
-							         <td> <%= ad.getPlayers().getString("subscription") %> </td>
+							      <td> <%= players.getString("pseudo") %> </td>
+							         <td> <%= players.getString("subscription") %> </td>
 							      
 								  <td> N.A </td> 
-							     <td> <button  type="button" class="btn btn-primary btn-sm">  <%= ad.getPlayers().getString("ban") %> </button>
+							     <td> <button  type="button" class="btn btn-primary btn-sm">  <%= players.getString("ban") %> </button>
 							    </tr>
 							    
 							    <% } %>
@@ -152,15 +159,15 @@
 							  <tbody>
 							  <% int i = 0; 			
 							  %>
-							   <%	while (ad.getMatchs().next()) { 
+							   <%	while (players.next()) { 
 							    i++;
 							   %>
 							
 							    <tr>
 							      <th scope="row"><%=i %></th>
-							      <td><%= ad.getMatchs().getString("gameName") %></td>
-							      <td><%= ad.getMatchs().getString("pseudo") %></td>
-							          <td><%= ad.getMatchs().getString("hBegin") %></td>
+							      <td><%= matchs.getString("gameName") %></td>
+							      <td><%= matchs.getString("pseudo") %></td>
+							          <td><%= matchs.getString("hBegin") %></td>
 							      
 							     <td> <button  type="button" class="btn btn-primary btn-sm">  End then game  </button>
 							    </tr>

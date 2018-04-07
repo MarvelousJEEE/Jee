@@ -114,7 +114,6 @@ public class GestionBDD {
 		            	if(hasTuple(resultat)) {
 		            		status[0] = true;
 		            		status[1] = resultat.getBoolean("isAdmin");
-		            		System.out.println(status[0]+ " "+status[1] + " "+resultat.getBoolean("isAdmin"));
 		            	}
 		                resultat.close();
 		            } catch ( SQLException ignore ) {
