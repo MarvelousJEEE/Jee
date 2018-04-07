@@ -3,6 +3,7 @@
 <%@ page import="servlets.SessionTools" %>
 <%@ page import="bdd.GestionBDD" %>
 <%@ page import="java.sql.ResultSet" %>
+<%@ page import="servlets.SignIn"%>
 
 
 		
@@ -13,7 +14,8 @@
 		<br>
 		<br>
 		<br>
-			<% String[] tableGames = (String[])request.getAttribute("Games");
+			
+			<% String[] tableGames = SignIn.getTableGames();
 			   int lenTable = tableGames.length;
 			   int i=0;
 			   for(i=0;i<lenTable;i++){%>

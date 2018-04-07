@@ -27,11 +27,11 @@ import beans.User;
 public class SignIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public static final String VUE = "/Views/signIn.jsp";
-    public static final String redirection = "/games";
+    public static final String redirection = "/Views/games.jsp";
     public static final String redirection2 = "/admin";
     public static final String ATT_SESSION_USER = "users";
-    private GestionBDD bdd;
-    private ResultSet games;
+    private static GestionBDD bdd;
+    private static ResultSet games;
     
     public SignIn() {
         super();
@@ -52,13 +52,11 @@ public class SignIn extends HttpServlet {
 			e.printStackTrace();
 		}
 		if(isUser) {
-			SessionTools.logIn(request, response, isAdmin);
-			String[] tableGames = new String[0];
-			tableGames = this.getTableGames();
-			request.setAttribute("Games", tableGames);
+			//SessionTools.logIn(request, response, isAdmin);
 			User u = new User();
 			u.setPseudo(request.getParameter("pseudo"));
 			u.setAdmin(false);
+			System.out.println("Games : "+request.getAttribute("Games"));
 			if(isAdmin) {
 				//Pour rediriger vers une autre servlet
 				response.sendRedirect( request.getContextPath() + redirection2);
@@ -88,20 +86,20 @@ public class SignIn extends HttpServlet {
 		}
     }
     
-    public String[] getTableGames() {
-  	    this.games = bdd.getGames();
+    public static String[] getTableGames() {
+  	    games = bdd.getGames();
   	    try {
-  	    		int i;
-  	    		this.games.last();
+  	    	int i;
+  	    	games.last();
 			 //on récupère le numéro de la ligne 
-	  	    int nombreLignes = this.games.getRow(); 
+	  	    int nombreLignes = games.getRow(); 
 	  	    //on replace le curseur avant la première ligne 
-	  	    this.games.beforeFirst();
-	  	    this.games.next();
+	  	    games.beforeFirst();
+	  	    games.next();
 			String[] tableGames = new String[nombreLignes];
 			for(i=0;i<nombreLignes;i++) {
-				tableGames[i]=this.games.getNString("infos");
-				this.games.next();
+				tableGames[i]=games.getNString("infos");
+				games.next();
 			}
 	  	    return tableGames;
 		} catch (SQLException e) {
