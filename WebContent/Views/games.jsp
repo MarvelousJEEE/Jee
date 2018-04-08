@@ -29,12 +29,14 @@
 								String pseudo = (String)request.getAttribute("pseudo");
 								while(games.next()){
 									nbGames++;
-									name = games.getString("name");
+									if(games.getBoolean("isShowed")){
+										name = games.getString("name");
 							%>
-								<label><%= name %></label>
-								<input type="submit" value="Play" onclick="play('<%=pseudo%>',name)"/>
-								<input type="submit" value="Stop" onclick="stop('<%=pseudo%>',name)"/>
-								</br>
+										<label><%= name %></label>
+										<input type="submit" value="Play" onclick="play('<%=pseudo%>',name)"/>
+										<input type="submit" value="Stop" onclick="stop('<%=pseudo%>',name)"/>
+										</br>
+									<% } %>
 							<%} %>
 					</fieldset>
 					</div>

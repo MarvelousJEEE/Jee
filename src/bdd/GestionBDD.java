@@ -90,7 +90,7 @@ public class GestionBDD {
 	}
 	
 	public boolean[] getStatus(HttpServletRequest request) throws SQLException {
-		boolean  [] status = new boolean[2];//Position 0 : isUser //Position 1  isAdmin
+		boolean  [] status = new boolean[3];//Position 0 : isUser //Position 1  isAdmin //Position 2 : isBanned
 		Connection connexion = null;
 	    PreparedStatement statement = null;
 	    ResultSet resultat = null;
@@ -118,6 +118,7 @@ public class GestionBDD {
 		            	if(hasTuple(resultat)) {
 		            		status[0] = true;
 		            		status[1] = resultat.getBoolean("isAdmin");
+		            		status[2] = resultat.getBoolean("ban");
 		            	}
 		                resultat.close();
 		            } catch ( SQLException ignore ) {
@@ -159,7 +160,6 @@ public class GestionBDD {
 		        statement.setString(1, pseudo);
 		        statement.setString(2,  mdp);
 		        resultat = statement.executeQuery();
-		        System.out.println(resultat.toString());
 	        } catch ( SQLException e ) {
 	        	e.printStackTrace();
 		    } catch (ClassNotFoundException e) {
@@ -334,6 +334,7 @@ public class GestionBDD {
 	    String name = (String) request.getParameter("name");
 		   String info = (String) request.getParameter("infos");
 		   String release = (String) request.getParameter("release");
+		   System.out.println("Ajout d'un jeu : " +name + " " + info + " " + release);
 		   
 		   try {
 		        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
@@ -471,6 +472,26 @@ public class GestionBDD {
 	
 		 
 	}
+
+	public void setShow(HttpServletRequest request, Boolean b) {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+	    String name = request.getParameter("name");
+	    /* Connexion à la base de données */
+	    try {
+	        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+	        /* Verification pseudo */
+	        statement = (PreparedStatement) connexion.prepareStatement("update Games set isShowed = ? where name = ?;");
+	        statement.setBoolean(1, b);
+	        statement.setString(2, name);
+	        statement.executeUpdate();
+	                      
+	    } catch (SQLException e ) {
+	    	e.printStackTrace();
+	    }
+	}
+
 	
 	
 	

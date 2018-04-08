@@ -1,7 +1,7 @@
-
-			function play(pseudo, game, numeroJeu) {
-				if (compteurTable[numeroJeu] == 0) {
-					var k=0;
+var compteur = 0 // Compteur pour que l'utilisateur ne puisse pas appuyer sur Play ou Stop plus de une fois d'affiler 
+	
+			function play(pseudo, game) {
+				if (compteur == 0) {
 					var req = newXMLHttpRequest();
 					req.open("POST", "servletgames", true);
 					req.onreadystatechange = getReadyStateHandler();
@@ -9,26 +9,14 @@
 							"application/x-www-form-urlencoded");
 					req.send("variable1=" + pseudo + "&" + "variable2=" + game
 							+ "&" + "variable3=play");
-					for(k=0;k<size;k++){
-						if(numeroJeu==k){
-							compteurTable[k]=1;			// 1 siginifie que le jeu va commencÃ©
-						}
-						else {
-							compteurTable[k]=-1;			// -1 signifie qu'un autre jeu est dÃ©jÃ  lancÃ©
-						}
-					}
-				}
-				else if(compteurTable[numeroJeu] == -1){
-					alert('Vous ne pouvez pas jouer Ã  deux jeux Ã  la fois');
-				}
-				else {
-					alert('Vous Ãªtes dÃ©jÃ  en train de jouer Ã  ce jeu');
+					compteur++;
+				} else {
+					alert('Vous êtes déjà en train de jouer');
 				}
 			}
 	
-			function stop(pseudo, game, numeroJeu) {
-				if (compteurTable[numeroJeu] == 1) {
-					var k=0;
+			function stop(pseudo, game) {
+				if (compteur == 1) {
 					var req = newXMLHttpRequest();
 					req.open("POST", "servletgames", true);
 					req.onreadystatechange = getReadyStateHandler();
@@ -36,12 +24,9 @@
 							"application/x-www-form-urlencoded");
 					req.send("variable1=" + pseudo + "&" + "variable2=" + game
 							+ "&" + "variable3=stop");
-					for(k=0;k<size;k++){
-							compteurTable[k]=0;			// 0 siginifie que le jeu peut Ãªtre lancÃ©
-						};
-				} 
-				else {
-					alert('Vous ne jouez pas Ã  ce jeu ')
+					compteur--;
+				} else {
+					alert('Vous devez commencez une partie')
 				}
 			}
 	

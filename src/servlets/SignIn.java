@@ -29,6 +29,7 @@ public class SignIn extends HttpServlet {
     public static final String VUE = "/Views/signIn.jsp";
     public static final String redirection = "/Views/games.jsp";
     public static final String redirection2 = "/admin";
+    public static final String VUE2 = "/Views/ban.jsp";
     public static final String ATT_SESSION_USER = "users";
     private static GestionBDD bdd;
     private static ResultSet games;
@@ -43,30 +44,33 @@ public class SignIn extends HttpServlet {
     	GestionBDD bdd = GestionBDD.getInstance();
     	boolean isUser=false;
     	boolean isAdmin = false;
+    	boolean isBanned = false;
     	boolean[] status;	
 		try {
 			status = bdd.getStatus(request);
 			isUser =status[0];
 			isAdmin = status[1];
+			isBanned = status[2];
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		if(isUser) {
-			//SessionTools.logIn(request, response, isAdmin);
-			User u = new User();
-			u.setPseudo(request.getParameter("pseudo"));
-			u.setAdmin(false);
-			System.out.println("Games : "+request.getAttribute("Games"));
-			if(isAdmin) {
-				//Pour rediriger vers une autre servlet
-				response.sendRedirect( request.getContextPath() + redirection2);
+		if(!isBanned) {
+			if(isUser) {
+				SessionTools.logIn(request, response, isAdmin);
+				if(isAdmin) {
+					//Pour rediriger vers une autre servlet
+					response.sendRedirect( request.getContextPath() + redirection2);
+				}else {
+					response.sendRedirect( request.getContextPath() + redirection);
+				}
 			}else {
-				response.sendRedirect( request.getContextPath() + redirection);
+				//TODO: message d'erreur => demander de se reconnecter
+			    this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 			}
 		}else {
-			//TODO: message d'erreur => demander de se reconnecter
-		    this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+			this.getServletContext().getRequestDispatcher( VUE2 ).forward( request, response );
 		}
+		
     }
     
     

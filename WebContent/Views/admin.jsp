@@ -41,7 +41,7 @@
 							      String hide; %>	
 								<%	while (games.next()) { %>
 								      <%
-								      if(games.getBoolean("show")){
+								      if(games.getBoolean("isShowed")){
 								    	show = "checked";
 								    	 hide ="";								    	  
 								      }else {
@@ -52,7 +52,6 @@
 									<li>  
 										<form action="/J2EE/admin" method="post">
 										<label><%= games.getString("name") %></label><input type="hidden" value= <%= games.getString("name") %> name="name" />
-										
 						    				 <%= games.getString("infos") + "   " + games.getString("release")%> 
 						 	                 <label > <input type="radio" name="option" value="show" <%=show %>>Show</label>
 											<label><input type="radio" name="option" value="hide" <%=hide %>>  Hide</label>
@@ -77,9 +76,9 @@
 					<div class="container">	
 						<form action="/J2EE/admin" method="post">
 						<input type="hidden" value="add" name="option" />
-							Id	<input type="text" name="name"/>   <br>  
-							Game title	 <input type="text" name="infos">  <br>
-							Realese (YYYY-MM-DD) 	<input type="text" name="release"> <br>
+							Game title	 <input type="text" name="name">  <br>
+							Release (YYYY-MM-DD) 	<input type="text" name="release"> <br>
+							Infos <input type="text" name="infos"> </br>
 							<button type="submit">ADD</button>
 						</form>
 					</div>

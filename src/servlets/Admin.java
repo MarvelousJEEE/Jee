@@ -73,17 +73,20 @@ public class Admin extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//SessionTools.allowAdmin(this, request, response, vue, redirection);
-		   this.getServletContext().getRequestDispatcher( vue ).forward( request, response ); 
+		SessionTools.allowAdmin(this, request, response, vue, redirection);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		SessionTools.allowAdmin(this, request, response, vue, redirection);	
 		String option = (String) request.getParameter("option");
-		
+		if("show".equals(option)) {
+			bdd.setShow(request, true);
+		}
+		if("hide".equals(option)) {
+			bdd.setShow(request, false);
+		}
 		  if ("delete".equals(option) ) {			 
 				bdd.deleteGame(request);				 
 		  }
@@ -99,8 +102,7 @@ public class Admin extends HttpServlet {
 		   if( "end".equals(option) ) {
 				  bdd.end(request);	 
 			  }
-		   this.getServletContext().getRequestDispatcher( vue ).forward( request, response ); 
-		//	SessionTools.allowAdmin(this, request, response, vue, redirection);
+			SessionTools.allowAdmin(this, request, response, vue, redirection);	
 	}
 
 }
