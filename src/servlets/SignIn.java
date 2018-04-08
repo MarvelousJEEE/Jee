@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.JOptionPane;
+
+import com.mysql.jdbc.ResultSetMetaData;
 
 import bdd.ConfigBDD;
 import bdd.GestionBDD;
@@ -23,13 +27,16 @@ import beans.User;
 public class SignIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public static final String VUE = "/Views/signIn.jsp";
-    public static final String redirection = "/games";
+    public static final String redirection = "/Views/games.jsp";
     public static final String redirection2 = "/admin";
+    public static final String VUE2 = "/Views/ban.jsp";
     public static final String ATT_SESSION_USER = "users";
-    
+    private static GestionBDD bdd;
+    private static ResultSet games;
     
     public SignIn() {
         super();
+        this.bdd = GestionBDD.getInstance();
     }
     
     public void doPost(HttpServletRequest request, HttpServletResponse response )throws ServletException, IOException {
@@ -37,26 +44,35 @@ public class SignIn extends HttpServlet {
     	GestionBDD bdd = GestionBDD.getInstance();
     	boolean isUser=false;
     	boolean isAdmin = false;
-    	boolean[] status;
+    	boolean isBanned = false;
+    	boolean[] status;	
 		try {
 			status = bdd.getStatus(request);
 			isUser =status[0];
 			isAdmin = status[1];
+			isBanned = status[2];
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		if(isUser) {
-			SessionTools.logIn(request, response, isAdmin);
-			if(isAdmin) {
-				//Pour rediriger vers une autre servlet
-				response.sendRedirect( request.getContextPath() + redirection2);
+		if(!isBanned) {
+			if(isUser) {
+				SessionTools.logIn(request, response, isAdmin);
+				if(isAdmin) {
+					//Pour rediriger vers une autre servlet
+					response.sendRedirect( request.getContextPath() + redirection2);
+				}else {
+					//response.sendRedirect( request.getContextPath() + redirection);
+					this.getServletContext().getRequestDispatcher( redirection ).forward( request, response );  // Laissez comme ça sinon ca marche pas!!!
+
+				}
 			}else {
-				response.sendRedirect( request.getContextPath() + redirection);
+				//TODO: message d'erreur => demander de se reconnecter
+			    this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 			}
 		}else {
-			//TODO: message d'erreur => demander de se reconnecter
-		    this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
+			this.getServletContext().getRequestDispatcher( VUE2 ).forward( request, response );
 		}
+		
     }
     
     
@@ -75,4 +91,6 @@ public class SignIn extends HttpServlet {
 		       this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 		}
     }
+    
+ 
 }

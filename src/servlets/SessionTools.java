@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bdd.GestionBDD;
 import beans.User;
 
 public class SessionTools {
@@ -74,17 +76,21 @@ public class SessionTools {
 		response.addCookie( cookie );
 		
 		request.setAttribute("pseudo", u.getPseudo());
+
 	}
 	
 	public static void logOut(HttpServletRequest request, HttpServletResponse response) {
 		Cookie c = getCookie(request, "user");
+		if(c!=null) {
 		String pseudo = c.getValue();
 		HttpSession session = request.getSession();
 		session.removeAttribute(pseudo);
+		}
 		
 	}
 	
-	public static void allowUser(HttpServlet servlet, HttpServletRequest request,HttpServletResponse response, String vue, String redirection) throws ServletException, IOException {
+	public static void allowUser(HttpServlet servlet, HttpServletRequest request,HttpServletResponse response, String vue, String redirection) throws ServletException, IOException, SQLException {
+		boolean [] status = GestionBDD.getInstance().getStatus(request);
 		if(SessionTools.isUser(request)) {
 			request.setAttribute("pseudo", SessionTools.getCookie(request, "user").getValue());
 			servlet.getServletContext().getRequestDispatcher(vue).forward( request, response );
