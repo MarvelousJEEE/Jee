@@ -260,6 +260,7 @@ public class GestionBDD {
 	        statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO Matchs (`pseudo`, `gameName`, `hBegin`) VALUES (?,?,CURRENT_TIMESTAMP());");
 	        statement.setString(1, pseudo);
 	        statement.setString(2, game);
+	        System.out.println(pseudo+game);
 	        statement.execute();
 	        statement.close();
 	        System.out.println("Le jeu va commencé");

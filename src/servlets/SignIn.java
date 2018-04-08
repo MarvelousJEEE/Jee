@@ -61,7 +61,9 @@ public class SignIn extends HttpServlet {
 					//Pour rediriger vers une autre servlet
 					response.sendRedirect( request.getContextPath() + redirection2);
 				}else {
-					response.sendRedirect( request.getContextPath() + redirection);
+					//response.sendRedirect( request.getContextPath() + redirection);
+					this.getServletContext().getRequestDispatcher( redirection ).forward( request, response );  // Laissez comme ça sinon ca marche pas!!!
+
 				}
 			}else {
 				//TODO: message d'erreur => demander de se reconnecter

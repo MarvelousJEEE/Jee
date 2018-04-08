@@ -77,7 +77,7 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `mydb`.`Matchs` ;
 
 CREATE TABLE IF NOT EXISTS `mydb`.`Matchs` (
-  `idMatch` INT NOT NULL,
+  `idMatch` INT NOT NULL AUTO_INCREMENT,
   `pseudo` VARCHAR(20) NOT NULL,
   `gameName` VARCHAR(45) NOT NULL,
   `hBegin` DATETIME NULL,

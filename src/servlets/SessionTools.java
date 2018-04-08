@@ -76,13 +76,16 @@ public class SessionTools {
 		response.addCookie( cookie );
 		
 		request.setAttribute("pseudo", u.getPseudo());
+
 	}
 	
 	public static void logOut(HttpServletRequest request, HttpServletResponse response) {
 		Cookie c = getCookie(request, "user");
+		if(c!=null) {
 		String pseudo = c.getValue();
 		HttpSession session = request.getSession();
 		session.removeAttribute(pseudo);
+		}
 		
 	}
 	

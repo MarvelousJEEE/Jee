@@ -10,15 +10,17 @@
 					<li><a href="#copyright"> Contactez-nous </a></li>
 					<li><a href="#" id="logout">LogOut</a></li>
 				</ul>
+				
 			</nav>
-			<h1>
-				Bonjour<%=request.getAttribute("pseudo")%>, amusez vous bien !
-			</h1>
+
 
 
 		<!-- Game list  -->
 			<div class="wrapper style1 first">
 				<article id="games">
+				<h1>
+				Bonjour <%=request.getAttribute("pseudo")%>, amusez vous bien !
+			</h1>
 					<div class="row">
 						<fieldset>
 							<% 
@@ -31,11 +33,20 @@
 									nbGames++;
 									if(games.getBoolean("isShowed")){
 										name = games.getString("name");
+
 							%>
-										<label><%= name %></label>
-										<input type="submit" value="Play" onclick="play('<%=pseudo%>',name)"/>
-										<input type="submit" value="Stop" onclick="stop('<%=pseudo%>',name)"/>
-										</br>
+										<br>
+										<h2><%= name %></h2>
+										<p>
+											 <%= games.getString("infos") + "   " + games.getString("release")%> 
+											</p> 
+									
+									<div style = "margin-top : -1%">
+									
+										<input type="submit" class="btn " value="Play" onclick="play('<%=pseudo%>','<%=name%>','<%=nbGames%>')"/>
+										<input type="submit"  class="btn "  value="Stop" onclick="stop('<%=pseudo%>','<%=name%>','<%=nbGames%>')"/>
+										<br>
+									</div>
 									<% } %>
 							<%} %>
 					</fieldset>
@@ -48,7 +59,7 @@
 		var compteurTable = new Array() ; // tableau de compteur pour que l'utilisateur ne puisse pas appuyer sur Play ou Stop plus de une fois d'affiler 
 		var j=0;
 		var size = <%=nbGames%>;
-		for(j=0;j<size;j++){
+		for(j=1;j<=size;j++){
 			compteurTable[j]=0;			// initialisation de tous les compteurs de jeu à 0.
 		}
 	</script>
