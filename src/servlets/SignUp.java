@@ -16,7 +16,8 @@ import bdd.GestionBDD;
 public class SignUp extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static final String vue = "/Views/signUp.jsp";
-	private static final String redirection = "/Views/games.jsp";
+	private static final String redirection = "/games";
+	private static final String redirection2 = "/signin";
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -30,8 +31,6 @@ public class SignUp extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -49,13 +48,13 @@ public class SignUp extends HttpServlet {
 		if(password.equals(password2)) {
 			boolean a = bdd.enregisterJoueur(pseudo, password, dateOfBirth, email);
 			if (a) {
-				this.getServletContext().getRequestDispatcher(redirection).forward(request, response);
+				response.sendRedirect( request.getContextPath() + redirection);
 			} else {
-				this.getServletContext().getRequestDispatcher(vue).forward(request, response);
+				response.sendRedirect( request.getContextPath() + redirection2);
 			}
 		} else {
 			System.out.println("erreur dans la verification du Password");
-			this.getServletContext().getRequestDispatcher( vue ).forward( request, response);
+			response.sendRedirect( request.getContextPath() + redirection2);
 		}
 	}
 

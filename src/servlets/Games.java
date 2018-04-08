@@ -2,6 +2,8 @@ package servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,14 +19,14 @@ import beans.User;
  * Servlet implementation class ServletGames
  */
 @WebServlet("/games")
-public class games extends HttpServlet {
+public class Games extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     public static final String VUE = "/Views/games.jsp";
     public static final String redirection = "/signin";
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public games() {
+    public Games() {
         super();
     }
 
@@ -33,7 +35,6 @@ public class games extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SessionTools.allowUser(this, request, response, VUE, redirection);
-
 	}
 
 	/**
@@ -47,7 +48,7 @@ public class games extends HttpServlet {
 			GestionBDD bdd = GestionBDD.getInstance();
 			bdd.enregisterPartie(pseudo,game);
 		}
-		if(type.equals("stop") & !(pseudo.equals(""))) {
+		else if(type.equals("stop") & !(pseudo.equals(""))) {
 			GestionBDD bdd = GestionBDD.getInstance();
 			bdd.enregistrerStop(pseudo,game);
 			}
@@ -56,4 +57,5 @@ public class games extends HttpServlet {
 
 		}
 	}
+	
 }

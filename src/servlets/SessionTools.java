@@ -1,6 +1,7 @@
 package servlets;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletException;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bdd.GestionBDD;
 import beans.User;
 
 public class SessionTools {
@@ -28,7 +30,6 @@ public class SessionTools {
 			return false;
 		}
 		String pseudo = c.getValue();
-		System.out.println(pseudo);
 		HttpSession session = request.getSession(); 
 		User u = (User)session.getAttribute(pseudo);
 		if(u==null) {
@@ -54,12 +55,39 @@ public class SessionTools {
 			if(u.isAdmin()) {
 				return true;
 			}else {
-				return true;
+				return false;
 			}
 		}
 	}
 	
-	public static void allowUser(HttpServlet servlet, HttpServletRequest request,HttpServletResponse response, String vue, String redirection) throws ServletException, IOException {
+	public static void logIn(HttpServletRequest request, HttpServletResponse response, boolean isAdmin) {
+		//Création du bean utilisateur
+		User u = new User();
+		u.setPseudo(request.getParameter("pseudo"));
+		u.setAdmin(isAdmin);
+		
+		//Creation de la session
+		HttpSession session = request.getSession();
+		session.setAttribute( u.getPseudo(), u);
+		
+		//Création du cookie
+		Cookie cookie = new Cookie( "user", u.getPseudo() );
+		cookie.setMaxAge(60 * 60 * 24 * 365);
+		response.addCookie( cookie );
+		
+		request.setAttribute("pseudo", u.getPseudo());
+	}
+	
+	public static void logOut(HttpServletRequest request, HttpServletResponse response) {
+		Cookie c = getCookie(request, "user");
+		String pseudo = c.getValue();
+		HttpSession session = request.getSession();
+		session.removeAttribute(pseudo);
+		
+	}
+	
+	public static void allowUser(HttpServlet servlet, HttpServletRequest request,HttpServletResponse response, String vue, String redirection) throws ServletException, IOException, SQLException {
+		boolean [] status = GestionBDD.getInstance().getStatus(request);
 		if(SessionTools.isUser(request)) {
 			request.setAttribute("pseudo", SessionTools.getCookie(request, "user").getValue());
 			servlet.getServletContext().getRequestDispatcher(vue).forward( request, response );
