@@ -518,6 +518,25 @@ public class GestionBDD {
 	
 	
 	
+	
+	
+	public void changeMDP(HttpServletRequest request) {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+	    String pseudo = (String) request.getParameter("pseudo");
+	    String newMdp = (String) request.getParameter("NewPassword");
+		try {
+			connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+			statement = (PreparedStatement) connexion.prepareStatement("Update Players set password = ? where pseudo = ? ;");
+			statement.setString(1, newMdp);
+			statement.setString(2, pseudo);
+			statement.execute();
+			statement.close();        
+		} catch (SQLException e ) {
+		    e.printStackTrace();
+	    }
+	}
 
 	
 	
