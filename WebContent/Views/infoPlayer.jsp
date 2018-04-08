@@ -1,4 +1,7 @@
 <%@include file="header.jsp"%>
+<%@ page import="bdd.GestionBDD" %>
+<%@ page import="java.sql.ResultSet" %>
+
 
 		<!-- Nav -->
 			<nav id="nav">
@@ -43,14 +46,53 @@
 								<input type="text" id="newEmail" name="newEmail" value=<%=request.getAttribute("email")%> size="20" maxlength="60"/><br>
 								<input type="hidden" value= <%=request.getAttribute("pseudo")%>  name="pseudo"/>
 								<input type="hidden" value="email" name="option" /> 
-								<input type="submit" value="Valider"/><br>
+								<input type="submit" value="Validate"/><br>
 							</fieldset>
 						</div>
 					</form>			
 				</article>
 			</div>
-		 -->
+			
+			<!-- Prefered games  -->
+			<div class="wrapper style3">
+				<article class="container" id="preferedGames">
+					<form method="post" action="/J2EE/infoPlayer">
+						<div class="row" align="center">
+							<fieldset>
+								<h1>Your prefered games</h1>
+								<%
+								GestionBDD bdd = GestionBDD.getInstance();
+								ResultSet games = bdd.getGames();
+								//ResultSet prefered = bdd.getGames();
+								ResultSet prefered = bdd.getPreferedGames(request);
+								while(games.next()) {
+									boolean isPrefered = false;
+									prefered.beforeFirst();
+									while(!isPrefered && prefered.next()) {
+										if(prefered.getString("gameName").equals(games.getString("name"))) {
+											isPrefered = true;
+										}
+									}
+									if(isPrefered) {%>
+										<input type="checkbox" value="<%=games.getString("name")%>" name="games" checked/> <%=games.getString("name") %><br>
+								  <%} else {%>
+								  		<input type="checkbox" value="<%=games.getString("name")%>" name="games" /> <%=games.getString("name") %><br>
+								 <% }
+								}%>
+								 
+								
+								
+								<input type="hidden" value= <%=request.getAttribute("pseudo")%>  name="pseudo"/>
+								<input type="hidden" value="preferedGames" name="option" /> 
+								<input type="submit" value="Validate"/><br>
+							</fieldset>
+						</div>
+					</form>			
+				</article>
+			</div>
 
+
+			
 
 <%@include file="footer.jsp"%>	
 	
