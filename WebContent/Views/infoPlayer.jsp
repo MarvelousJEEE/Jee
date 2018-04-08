@@ -3,11 +3,9 @@
 		<!-- Nav -->
 			<nav id="nav">
 				<ul class="container">
-				<!-- 
-					<li><a href="#signin">SignIn</a></li>
-					<li><a href="#signup">SignUp</a></li>
+					<li><a href="/J2EE/games">Games</a></li>
 					<li><a href="#copyright">Contactez-nous</a>
-				 -->
+					<li><a href="#" id="logout">LogOut</a></li>
 				</ul>
 			</nav>
 
@@ -18,8 +16,8 @@
 					<div class="row">
 						<form method="post" action="/J2EE/infoPlayer">
 							<fieldset>
-								<legend>Change your password</legend>
-								<label for="Password">Older password</label>
+								<h1>Change your password</h1>
+								<label for="Password">Old password</label>
 								<input type="password" id="password" name="password" value="" size="20" maxlength="60"/>
 								<label for="NewPassword">New password</label>
 								<input type="password" id="NewPassword" name="NewPassword" value="" size="20" maxlength="60"/>

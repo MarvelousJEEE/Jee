@@ -16,6 +16,7 @@ public class InfoPlayer extends HttpServlet {
 	
 	public static final String vue = "/Views/infoPlayer.jsp";
 	public static final String redirection = "/signin";
+	public static final String redirection2 = "/games";
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
@@ -26,7 +27,7 @@ public class InfoPlayer extends HttpServlet {
 	}
 
 	
-	protected void doPost (HttpServletRequest request, HttpServletResponse response) {
+	protected void doPost (HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String option = (String) request.getParameter("option");
 		System.out.println("requestPseudo => "+request.getParameter("pseudo"));
 		if(option.equals("password")) {
@@ -35,13 +36,16 @@ public class InfoPlayer extends HttpServlet {
 					if(request.getParameter("RepeatPassword").equals(request.getParameter("NewPassword"))) {
 						System.out.println("ok !!!!!!");
 						GestionBDD.getInstance().changeMDP(request);
+						response.sendRedirect(request.getContextPath() + redirection2);
 					} else {
 						//TODO: Error : wrong password 
 						System.out.println("erreur dans le nouveau mdp !!!");
+						response.sendRedirect(request.getContextPath() + vue);
 					}
 				} else {
 					//TODO: Error : wrong password 
 					System.out.println("Mauvais mdp !!!");
+					response.sendRedirect(request.getContextPath() + vue);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
