@@ -25,8 +25,10 @@
 								GestionBDD bdd = GestionBDD.getInstance();
 								ResultSet games = bdd.getGames();
 								String name;
+								int nbGames = 0;
 								String pseudo = (String)request.getAttribute("pseudo");
 								while(games.next()){
+									nbGames++;
 									name = games.getString("name");
 							%>
 								<label><%= name %></label>
@@ -40,7 +42,14 @@
 				</article>
 			</div>
 
-
+	<script>
+		var compteurTable = new Array() ; // tableau de compteur pour que l'utilisateur ne puisse pas appuyer sur Play ou Stop plus de une fois d'affiler 
+		var j=0;
+		var size = <%=nbGames%>;
+		for(j=0;j<size;j++){
+			compteurTable[j]=0;			// initialisation de tous les compteurs de jeu à 0.
+		}
+	</script>
 
 <script src="<%=request.getContextPath()%>/assets/js/games.js"></script>
 <%@include file="footer.jsp"%>
