@@ -26,7 +26,7 @@ import beans.User;
 @WebServlet("/signin")
 public class SignIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    public static final String VUE = "/Views/signIn.jsp";
+    public static final String VUE = "/PublicViews/signIn.jsp";
     public static final String redirection = "/games";
     public static final String redirection2 = "/admin";
     public static final String VUE2 = "/Views/ban.jsp";

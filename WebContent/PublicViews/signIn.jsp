@@ -1,4 +1,4 @@
-<%@include file="header.jsp"%>
+<%@include file="../Views/header.jsp"%>
 
 		<!-- Nav -->
 			<nav id="nav">
@@ -52,7 +52,7 @@
 			</div>
 
 
-<%@include file="footer.jsp"%>	
+<%@include file="../Views/footer.jsp"%>	
 	
 	
 	

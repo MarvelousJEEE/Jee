@@ -15,7 +15,7 @@ import bdd.GestionBDD;
 @WebServlet("/signup")
 public class SignUp extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String vue = "/Views/signUp.jsp";
+	private static final String vue = "/PublicViews/signUp.jsp";
 	private static final String redirection = "/games";
 	private static final String redirection2 = "/signin";
        
