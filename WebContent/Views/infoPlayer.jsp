@@ -12,7 +12,7 @@
 	<%System.out.println("Pseudo => "+request.getAttribute("pseudo"));%>
 		<!-- Password  -->
 			<div class="wrapper style1 first">
-				<article class="container" id="signin">
+				<article class="container" id="password">
 					<div class="row">
 						<form method="post" action="/J2EE/infoPlayer">
 							<fieldset>
@@ -32,25 +32,18 @@
 				</article>
 			</div>
 
-		<!-- Sign Up  -->
-		<!-- 
+		<!-- adresse mail  -->
 			<div class="wrapper style2">
-				<article class="container" id="signup">
-					<form method="post" action="/J2EE/signup">
+				<article class="container" id="email">
+					<form method="post" action="/J2EE/infoPlayer">
 						<div class="row" align="center">
 							<fieldset>
-								<legend>SignUp</legend>
-								<label for="pseudo">Login</label><br>
-								<input type="text" id="pseudo" name="pseudo" value="" size="20" maxlength="60"/><br>
-								<label for="password">Password</label><br>
-								<input type=password id="password" name="password" value="" size="20" maxlength="60"/><br>
-								<label for="Verif">Password verification</label><br>
-								<input type="password" id="Verif" name="Verif" value="" size="20" maxlength="60"/><br>
-								<label for="dateOfBirth">Date of birth</label><br>
-								<input type="date" id="dateOfBirth" name="dateOfBirth" value="" size="20" maxlength="60"/><br>
-								<label for="email">Email</label><br>
-								<input type="email" id="email" name="email" value="" size="20" maxlength="60"/><br>
-								<input type="submit" value="Inscription"/><br>
+								<h1>Change your email</h1>
+								<label for="newEmail">email</label><br>
+								<input type="text" id="newEmail" name="newEmail" value=<%=request.getAttribute("email")%> size="20" maxlength="60"/><br>
+								<input type="hidden" value= <%=request.getAttribute("pseudo")%>  name="pseudo"/>
+								<input type="hidden" value="email" name="option" /> 
+								<input type="submit" value="Valider"/><br>
 							</fieldset>
 						</div>
 					</form>			

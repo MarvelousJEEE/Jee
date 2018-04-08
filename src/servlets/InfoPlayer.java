@@ -51,5 +51,11 @@ public class InfoPlayer extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		
+		if(option.equals("email")) {
+			GestionBDD.getInstance().changeEmail(request);
+			response.sendRedirect(request.getContextPath() + redirection2);
+			
+		}
 	}
 }
