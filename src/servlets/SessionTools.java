@@ -59,6 +59,7 @@ public class SessionTools {
 			}
 		}
 	}
+
 	
 	public static void logIn(HttpServletRequest request, HttpServletResponse response, boolean isAdmin) {
 		//Création du bean utilisateur
@@ -118,4 +119,5 @@ public class SessionTools {
 		}
 		return null;
 	}
+
 }
