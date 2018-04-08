@@ -339,7 +339,7 @@ public class GestionBDD {
 		   try {
 		        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
 
-				   statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO Games (`name`, `infos`, `release`, `show`) VALUES (?,?,?,?)");
+				   statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO Games (`name`, `infos`, `release`, `isShowed`) VALUES (?,?,?,?)");
 			        statement.setString(1, name);
 			        statement.setString(2, info);
 			        statement.setString(3, release);
@@ -405,7 +405,26 @@ public class GestionBDD {
 	        /* Verification pseudo */
 	
 	        statement = (PreparedStatement) connexion.prepareStatement("select * from Matchs where hEnd is not  NULL;");
-	     
+	      return( statement.executeQuery());
+	                      
+	    } catch (SQLException e ) {
+	    	e.printStackTrace();
+	    }
+		return null;
+	}
+	
+	public ResultSet getPlays(String pseudo) {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+
+	    /* Connexion à la base de données */
+	    try {
+	        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+	        /* Verification pseudo */
+	        statement = (PreparedStatement) connexion.prepareStatement("select count(*) from Matchs where pseudo = ?;");
+	       
+	        statement.setString(1, pseudo);
 	      return( statement.executeQuery());
 	                      
 	    } catch (SQLException e ) {

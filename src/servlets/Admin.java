@@ -73,7 +73,8 @@ public class Admin extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		SessionTools.allowAdmin(this, request, response, vue, redirection);
+	SessionTools.allowAdmin(this, request, response, vue, redirection);
+	//	 this.getServletContext().getRequestDispatcher( vue ).forward( request, response ); 
 	}
 
 	/**
@@ -103,6 +104,7 @@ public class Admin extends HttpServlet {
 				  bdd.end(request);	 
 			  }
 			SessionTools.allowAdmin(this, request, response, vue, redirection);	
+		  // this.getServletContext().getRequestDispatcher( vue ).forward( request, response ); 
 	}
 
 }

@@ -18,8 +18,8 @@
 					<li><a href="#addGame">Add Game </a></li>
 					<li><a href="#players"> Players </a></li>
 					<li><a href="#plays"> Plays </a></li>
-					<li><a href="#histo">History</a>
-					<li><a href="#copyright"> Contactez-nous </a></li>
+					<li><a href="#history">History</a>
+					
 					<li><a href="#" id="logout">LogOut</a></li>
 				</ul>
 			</nav>
@@ -28,10 +28,9 @@
 			<div class="wrapper style1 first">
 				<article class="container" id="gameList">
 					<div class="row">
-						<div class="4u 12u(mobile)">
-							<span class="image fit"><img src="<%=request.getContextPath()%>/images/pic00.jpg" alt="" /></span>
-						</div>
-						<div class="8u 12u(mobile)">
+						
+						<div class="8u 12u(mobile)" style="
+    padding-left: 35%;" >
 				
 						<h1> List of Games !  </h1>		
 						
@@ -51,7 +50,7 @@
 								      %>
 									<li>  
 										<form action="/J2EE/admin" method="post">
-										<label><%= games.getString("name") %></label><input type="hidden" value= <%= games.getString("name") %> name="name" />
+										<label><%= games.getString("name") %></label> <input type="hidden" value= <%= games.getString("name") %> name="name" />
 						    				 <%= games.getString("infos") + "   " + games.getString("release")%> 
 						 	                 <label > <input type="radio" name="option" value="show" <%=show %>>Show</label>
 											<label><input type="radio" name="option" value="hide" <%=hide %>>  Hide</label>
@@ -78,7 +77,7 @@
 						<input type="hidden" value="add" name="option" />
 							Game title	 <input type="text" name="name">  <br>
 							Release (YYYY-MM-DD) 	<input type="text" name="release"> <br>
-							Infos <input type="text" name="infos"> </br>
+							Infos <input type="text" name="infos"> <br>
 							<button type="submit">ADD</button>
 						</form>
 					</div>
@@ -115,6 +114,8 @@
 							    k++;
 							   %>
 							    <%
+								ResultSet plays = bdd.getPlays( (String) players.getString("pseudo"));
+							    plays.next();
 								      if( players.getBoolean("ban")){
 								    	ban = "Banned";								    								    	  
 								      }else {
@@ -127,7 +128,8 @@
 							      <td> <%= players.getString("pseudo") %> </td>
 							         <td> <%= players.getString("subscription") %> </td>
 							      
-								  <td> N.A </td> 
+								  <td> <%= 
+								  plays.getString("count(*)") %> </td> 
 							     <td> 
 							     
 							     
@@ -175,7 +177,7 @@
 							  <tbody>
 							  <% int i = 0; 			
 							  %>
-							   <%	while (players.next()) { 
+							   <%	while (matchs.next()) { 
 							    i++;
 							   %>
 							
@@ -185,7 +187,11 @@
 							      <td><%= matchs.getString("pseudo") %></td>
 							          <td><%= matchs.getString("hBegin") %></td>
 							      
-							     <td> <button  type="button" class="btn btn-primary btn-sm">  End then game  </button>
+							     <td>  <form action="/J2EE/admin" method="post">
+                    <input type="hidden" value="end"  name="option" />
+                    <button  type="submit" class="btn btn-primary btn-sm" value= <%= matchs.getString("idMatch") %> name="id"  >  End the game </button>        
+                    </form>
+                    </td>
 							    </tr>
 							    
 							    <% } %>
@@ -243,8 +249,28 @@
 				</article>
 			</div>
 			
-<%@include file="footer.jsp"%>
 
+
+<script>
+
+refreshGo();
+
+function refreshGo() {
+    myInterval = setInterval(refresh,60*5000);
+
+};
+
+
+function refresh(){
+	
+	var redirection = "http://"+window.location.host+"/J2EE/admin";
+	document.location.href=redirection;
+   
+};
+
+</script>
+
+<%@include file="footer.jsp"%>
 
 		
 
