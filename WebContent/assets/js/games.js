@@ -6,7 +6,7 @@
 					var req = newXMLHttpRequest();
 					alert("vous jouez à "+game);
 					req.open("POST", "games", true);
-					req.onreadystatechange = getReadyStateHandler();
+					req.onreadystatechange = getReadyStateHandler(req);
 					req.setRequestHeader("Content-Type",
 							"application/x-www-form-urlencoded");
 					req.send("variable1=" + pseudo + "&" + "variable2=" + game
@@ -70,7 +70,7 @@
 				return xmlreq;
 			}
 	
-			function getReadyStateHandler() {
+			function getReadyStateHandler(req) {
 				// Return an anonymous function that listens to the XMLHttpRequest instance
 				return function() {
 					// If the request's status is "complete"
