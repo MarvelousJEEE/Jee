@@ -86,28 +86,5 @@ public class SignIn extends HttpServlet {
 		}
     }
     
-    public static String[] getTableGames() {
-  	    games = bdd.getGames();
-  	    try {
-  	    	int i;
-  	    	games.last();
-			 //on récupère le numéro de la ligne 
-	  	    int nombreLignes = games.getRow(); 
-	  	    //on replace le curseur avant la première ligne 
-	  	    games.beforeFirst();
-	  	    games.next();
-			String[] tableGames = new String[nombreLignes];
-			for(i=0;i<nombreLignes;i++) {
-				tableGames[i]=games.getNString("infos");
-				games.next();
-			}
-	  	    return tableGames;
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-  	    
-    }
  
 }
