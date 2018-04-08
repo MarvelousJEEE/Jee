@@ -15,7 +15,7 @@
 					<div class="row">
 						<form method="post" action="/J2EE/signin">
 							<fieldset>
-								<legend>SignIn</legend>
+								<h1>SignIn</h1>
 								<label for="pseudo">Pseudo</label>
 								<input type="text" id="pseudo" name="pseudo" value="" size="20" maxlength="60"/>
 								<label for="password">Mot de passe</label>
@@ -33,7 +33,7 @@
 					<form method="post" action="/J2EE/signup">
 						<div class="row" align="center">
 							<fieldset>
-								<legend>SignUp</legend>
+								<h1>SignUp</h1>
 								<label for="pseudo">Login</label><br>
 								<input type="text" id="pseudo" name="pseudo" value="" size="20" maxlength="60"/><br>
 								<label for="password">Password</label><br>
