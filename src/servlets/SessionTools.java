@@ -94,6 +94,7 @@ public class SessionTools {
 		boolean [] status = GestionBDD.getInstance().getStatus(request);
 		if(SessionTools.isUser(request)) {
 			request.setAttribute("pseudo", SessionTools.getCookie(request, "user").getValue());
+			request.setAttribute("email", GestionBDD.getInstance().getEmail(SessionTools.getCookie(request, "user").getValue()));
 			servlet.getServletContext().getRequestDispatcher(vue).forward( request, response );
 		}else {
 			response.sendRedirect( request.getContextPath() + redirection);
