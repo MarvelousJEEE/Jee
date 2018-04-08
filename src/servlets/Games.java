@@ -34,7 +34,11 @@ public class Games extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		SessionTools.allowUser(this, request, response, VUE, redirection);
+		try {
+			SessionTools.allowUser(this, request, response, VUE, redirection);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

@@ -7,7 +7,7 @@
 			<nav id="nav">
 				<ul class="container">
 					<li><a href="#games">Games</a></li>
-					<li><a href="#copyright"> Contactez-nous </a></li>
+					<li><a href="/J2EE/infoPlayer"> Profil </a></li>
 					<li><a href="#" id="logout">LogOut</a></li>
 				</ul>
 			</nav>
