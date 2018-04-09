@@ -5,7 +5,7 @@
 				<ul class="container">
 					<li><a href="#signin">SignIn</a></li>
 					<li><a href="#signup">SignUp</a></li>
-					<li><a href="#copyright">Contactez-nous</a>
+				
 				</ul>
 			</nav>
 
@@ -17,9 +17,9 @@
 							<fieldset>
 								<h1>SignIn</h1>
 								<label for="pseudo">Pseudo</label>
-								<input type="text" id="pseudo" name="pseudo" value="" size="20" maxlength="60"/>
+								<input type="text" id="pseudo" name="pseudo" value="" size="20" maxlength="60"/> <br>
 								<label for="password">Mot de passe</label>
-								<input type="password" id="password" name="password" value="" size="20" maxlength="60"/>
+								<input type="password" id="password" name="password" value="" size="20" maxlength="60"/> <br>
 								<input type="submit" value="Connexion"/>
 							</fieldset>
 						</form>	
@@ -34,15 +34,15 @@
 						<div class="row" align="center">
 							<fieldset>
 								<h1>SignUp</h1>
-								<label for="pseudo">Login</label><br>
+								<label for="pseudo">Login</label>
 								<input type="text" id="pseudo" name="pseudo" value="" size="20" maxlength="60"/><br>
-								<label for="password">Password</label><br>
+								<label for="password">Password</label>
 								<input type=password id="password" name="password" value="" size="20" maxlength="60"/><br>
-								<label for="Verif">Password verification</label><br>
+								<label for="Verif">Password verification</label>
 								<input type="password" id="Verif" name="Verif" value="" size="20" maxlength="60"/><br>
-								<label for="dateOfBirth">Date of birth</label><br>
-								<input type="date" id="dateOfBirth" name="dateOfBirth" value="" size="20" maxlength="60"/><br>
-								<label for="email">Email</label><br>
+								<label for="dateOfBirth">Date of birth</label>
+								<input type="date" id="dateOfBirth" name="dateOfBirth" value="" size="20" maxlength="60"/> <br> <br>
+								<label for="email">Email</label>
 								<input type="email" id="email" name="email" value="" size="20" maxlength="60"/><br>
 								<input type="submit" value="Inscription"/><br>
 							</fieldset>
