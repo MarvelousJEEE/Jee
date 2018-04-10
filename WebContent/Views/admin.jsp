@@ -12,60 +12,58 @@
 
 
 		<!-- Nav -->
+		
+		
 			<nav id="nav">
 				<ul class="container">
 					<li><a href="#gameList">Game List</a></li>
 					<li><a href="#addGame">Add Game </a></li>
 					<li><a href="#players"> Players </a></li>
 					<li><a href="#plays"> Plays </a></li>
-					<li><a href="#history">History</a>
-					
+					<li><a href="#history">History</a>			
 					<li><a href="#" id="logout">LogOut</a></li>
 				</ul>
 			</nav>
 
 		<!-- Game List  -->
+		
+		
 			<div class="wrapper style1 first">
 				<article class="container" id="gameList">
-					<div class="row">
-						
-						<div class="8u 12u(mobile)" style="
-    padding-left: 35%;" >
-				
+					<div class="row">	
+						<div class="8u 12u(mobile)" style=" padding-left: 35%;" >
 						<h1> List of Games !  </h1>		
-						
-								
-						<ol>
-								<% String show;
-							      String hide; %>	
-								<%	while (games.next()) { %>
-								      <%
-								      if(games.getBoolean("isShowed")){
-								    	show = "checked";
-								    	 hide ="";								    	  
-								      }else {
-								    	hide = "checked";
-								    	show="";
-								      }   
-								      %>
-									<li>  
-										<form action="/J2EE/admin" method="post">
-										<label><%= games.getString("name") %></label> <input type="hidden" value= <%= games.getString("name") %> name="name" />
-						    				 <%= games.getString("infos") + "   " + games.getString("release")%> 
-						 	                 <label > <input type="radio" name="option" value="show" <%=show %>>Show</label>
-											<label><input type="radio" name="option" value="hide" <%=hide %>>  Hide</label>
-											<label ><input type="radio" name="option" value="delete" >Delete</label>
-						                     <button type="submit">Apply</button>       
-										</form>
-									</li>	 
-							  <% } %>
-						 </ol>
+							<% String show;
+							   String hide; 
+							   while (games.next()) {
+							   	if(games.getBoolean("isShowed")){
+									show = "checked";
+								   	hide ="";								    	  
+								}else {
+								   	hide = "checked";
+								    show="";
+								 }   
+							%> 
+							<form action="/J2EE/admin" method="post">
+								<label><%= games.getString("name") %></label> 
+								<input type="hidden" value= <%= games.getString("name") %> name="name" />   <!-- Recupération du nom du jeu -->
+			    		        <span>	  	 <%= games.getString("infos") + "   " + games.getString("release")%>   </span>
+			 	                <label > <input type="radio" name="option" value="show" <%=show %>> Show</label>
+								<label><input type="radio" name="option" value="hide" <%=hide %>>  Hide</label>
+								<label ><input type="radio" name="option" value="delete" >Delete</label>
+			                     <button type="submit">Apply</button>    
+							</form>
+							  <br>			
+							 <% } %>
 						</div>
 					</div>
 				</article>
 			</div>
 
+
+
 		<!-- Add Game  -->
+		
 			<div class="wrapper style2">
 				<article id="addGame">
 					<header>
@@ -80,10 +78,11 @@
 							Infos <input type="text" name="infos"> <br>
 							<button type="submit">ADD</button>
 						</form>
-					</div>
-					
+					</div>		
 				</article>
 			</div>
+
+
 
 		<!-- Table player  -->
 			<div class="wrapper style3">
