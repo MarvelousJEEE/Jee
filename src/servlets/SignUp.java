@@ -48,6 +48,7 @@ public class SignUp extends HttpServlet {
 		if(password.equals(password2)) {
 			boolean a = bdd.enregisterJoueur(pseudo, password, dateOfBirth, email);
 			if (a) {
+				SessionTools.logIn(request, response, false);
 				response.sendRedirect( request.getContextPath() + redirection);
 			} else {
 				response.sendRedirect( request.getContextPath() + redirection2);
