@@ -15,7 +15,7 @@ import bdd.GestionBDD;
 @WebServlet("/signup")
 public class SignUp extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static final String vue = "/Views/signUp.jsp";
+	private static final String vue = "/PublicViews/signUp.jsp";
 	private static final String redirection = "/games";
 	private static final String redirection2 = "/signin";
        
@@ -48,6 +48,7 @@ public class SignUp extends HttpServlet {
 		if(password.equals(password2)) {
 			boolean a = bdd.enregisterJoueur(pseudo, password, dateOfBirth, email);
 			if (a) {
+				SessionTools.logIn(request, response, false);
 				response.sendRedirect( request.getContextPath() + redirection);
 			} else {
 				response.sendRedirect( request.getContextPath() + redirection2);

@@ -309,23 +309,16 @@ public class GestionBDD {
 		Connection connexion = null;
 		ConfigBDD conf = ConfigBDD.getInstance();
 	    PreparedStatement statement = null;
-	    	String name = (String) request.getParameter("name");
-	    	
-
-		   try {
-		        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
-
-				   statement = (PreparedStatement) connexion.prepareStatement("Delete From Games where name = ? ;");
-			        statement.setString(1, name);
-			   
-			        statement.execute();
-			        statement.close();
-			   
-		                      
+	    String name = (String) request.getParameter("name");
+		try {
+			connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+			statement = (PreparedStatement) connexion.prepareStatement("Delete From Games where name = ? ;");
+			statement.setString(1, name);   
+			statement.execute();
+			statement.close();               
 		    } catch (SQLException e ) {
 		    	e.printStackTrace();
 		    }
-		
 	}
 	
 	public void addGame(HttpServletRequest request) {
@@ -538,6 +531,95 @@ public class GestionBDD {
 	    }
 	}
 
+	
+	public String getEmail(String pseudo) {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+		ResultSet resultat = null;
+	    PreparedStatement statement = null;
+
+	    /* Connexion à la base de données */
+	    try {
+	        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+	        statement = (PreparedStatement) connexion.prepareStatement("select email from Players where pseudo = ?;");
+	        statement.setString(1, pseudo);
+	        resultat = statement.executeQuery();
+	        if(resultat != null && resultat.next()) {
+	        	return resultat.getString("email");
+	        }
+	    } catch (SQLException e ) {
+	    	e.printStackTrace();
+	    }
+		return "";
+	}
+
+	public void changeEmail(HttpServletRequest request) {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+	    String pseudo = (String) request.getParameter("pseudo");
+	    String newEmail = (String) request.getParameter("newEmail");
+		try {
+			connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+			statement = (PreparedStatement) connexion.prepareStatement("Update Players set email = ? where pseudo = ? ;");
+			statement.setString(1, newEmail);
+			statement.setString(2, pseudo);
+			statement.execute();
+			statement.close();        
+		} catch (SQLException e ) {
+		    e.printStackTrace();
+	    }
+	}
+	
+	public ResultSet getPreferedGames(HttpServletRequest request) {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+		ResultSet resultat = null;
+	    PreparedStatement statement = null;
+	    String pseudo = (String) request.getAttribute("pseudo");
+	    try {
+	        connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+	        statement = (PreparedStatement) connexion.prepareStatement("select * from PreferedGames where pseudo = ?;");
+	        statement.setString(1, pseudo);
+	        return statement.executeQuery();
+	    } catch (SQLException e) {
+	    	e.printStackTrace();
+	    }
+		return null;	
+	}
+
+	public void removePreferedGames(String pseudo) {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+		try {
+			connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+			statement = (PreparedStatement) connexion.prepareStatement("Delete From PreferedGames where pseudo = ? ;");
+			statement.setString(1, pseudo);   
+			statement.execute();
+			statement.close();               
+		    } catch (SQLException e ) {
+		    	e.printStackTrace();
+		    }
+	}
+
+	public void addPreferedGames(String pseudo, String game) {
+		Connection connexion = null;
+		ConfigBDD conf = ConfigBDD.getInstance();
+	    PreparedStatement statement = null;
+		try {
+			connexion = (Connection) DriverManager.getConnection( conf.getUrl(), conf.getUser(), conf.getPassword());
+			statement = (PreparedStatement) connexion.prepareStatement("INSERT INTO PreferedGames (`pseudo`, `gameName`) VALUES (?,?);");
+			statement.setString(1, pseudo);
+			statement.setString(2, game);
+			statement.execute();
+			statement.close();               
+		    } catch (SQLException e ) {
+		    	e.printStackTrace();
+		    }
+	}
+		
+	
 	
 	
 }

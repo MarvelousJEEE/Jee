@@ -26,8 +26,8 @@ import beans.User;
 @WebServlet("/signin")
 public class SignIn extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    public static final String VUE = "/Views/signIn.jsp";
-    public static final String redirection = "/Views/games.jsp";
+    public static final String VUE = "/PublicViews/signIn.jsp";
+    public static final String redirection = "/games";
     public static final String redirection2 = "/admin";
     public static final String VUE2 = "/Views/ban.jsp";
     public static final String ATT_SESSION_USER = "users";
@@ -61,9 +61,7 @@ public class SignIn extends HttpServlet {
 					//Pour rediriger vers une autre servlet
 					response.sendRedirect( request.getContextPath() + redirection2);
 				}else {
-					//response.sendRedirect( request.getContextPath() + redirection);
-					this.getServletContext().getRequestDispatcher( redirection ).forward( request, response );  // Laissez comme ça sinon ca marche pas!!!
-
+					response.sendRedirect( request.getContextPath() + redirection);
 				}
 			}else {
 				//TODO: message d'erreur => demander de se reconnecter
@@ -86,7 +84,7 @@ public class SignIn extends HttpServlet {
 			e.printStackTrace();
 		}
 		if(isUser) {
-			
+			response.sendRedirect( request.getContextPath() + redirection);
 		} else {
 		       this.getServletContext().getRequestDispatcher( VUE ).forward( request, response );
 		}

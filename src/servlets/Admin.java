@@ -18,52 +18,25 @@ import bdd.GestionBDD;
 @WebServlet("/admin")
 public class Admin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ResultSet games; 
-	private ResultSet players; 
-	private ResultSet currentMatchs; 
-	private ResultSet finishedMatchs; 
-	private GestionBDD bdd;
+	GestionBDD bdd;
 	public static final String vue = "/Views/admin.jsp";
 	public static final String redirection = "/signin";
 
     /**
      * @see HttpServlet#HttpServlet()
      */
+	
+	private static Admin admin = new Admin();
+	
     public Admin() {
         super();
-        this.bdd = GestionBDD.getInstance();
-  	    this.games = bdd.getGames();
-  	    this.players = bdd.getPlayers();
-  	    this.currentMatchs = bdd.getCurrentMatchs();
-	    this.finishedMatchs = bdd.getFinishedMatchs();
+        bdd = GestionBDD.getInstance();
     }
     
-    public String test() {
-    	return "admin"; 
+    public static Admin getInstance() {
+    	return admin;
     }
     
-    public ResultSet getGames() {
-      
-    	return this.games ;
-    }
-    
-    
-    public ResultSet getPlayers() {
-        
-    	return this.players ;
-    }
-    
-   public ResultSet getCurrentMatchs() {
-        
-    	return this.currentMatchs ;
-    }
-    
-    
-   public ResultSet getFinishedMatchs() {
-       
-   	return this.finishedMatchs ;
-   }
-   
     
     
     

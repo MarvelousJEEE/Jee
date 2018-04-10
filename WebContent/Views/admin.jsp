@@ -119,7 +119,7 @@
 								      if( players.getBoolean("ban")){
 								    	ban = "Banned";								    								    	  
 								      }else {
-								    	ban = "Athorized";								   
+								    	ban = "Authorized";								   
 								      }   
 								      %>
 							  

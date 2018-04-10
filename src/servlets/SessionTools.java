@@ -24,6 +24,11 @@ public class SessionTools {
 		return verif;
 	}
 	
+	/**
+	 * Teste si l'individu est un utilisateur connecté.
+	 * @param request
+	 * @return true si l'individu est un utilisateur connecté, false sinon
+	 */
 	public static boolean isUser(HttpServletRequest request) {
 		Cookie c = getCookie(request, "user");
 		if(c==null) {
@@ -40,6 +45,11 @@ public class SessionTools {
 		}
 	}
 	
+	/**
+	 * Teste si l'individu est un admin connecté.
+	 * @param request
+	 * @return true si l'individu est un admin connecté, false sinon
+	 */
 	public static boolean isAdmin(HttpServletRequest request){
 		Cookie c = getCookie(request, "user");
 		if(c==null) {
@@ -59,7 +69,13 @@ public class SessionTools {
 			}
 		}
 	}
-	
+
+	/**
+	 * Connecte un utilisateur
+	 * @param request
+	 * @param response
+	 * @param isAdmin
+	 */
 	public static void logIn(HttpServletRequest request, HttpServletResponse response, boolean isAdmin) {
 		//Création du bean utilisateur
 		User u = new User();
@@ -79,6 +95,11 @@ public class SessionTools {
 
 	}
 	
+	/**
+	 * Déconnecte un utilisateur
+	 * @param request
+	 * @param response
+	 */
 	public static void logOut(HttpServletRequest request, HttpServletResponse response) {
 		Cookie c = getCookie(request, "user");
 		if(c!=null) {
@@ -89,16 +110,41 @@ public class SessionTools {
 		
 	}
 	
+	/**
+	 * Fonction de filtre. Si l'individu est un utilisateur connecté, alors la vue passée en paramètre est affichée.
+	 * Sinon l'individu est redirigé vers la servlet passé en paramètre.
+	 * @param servlet
+	 * @param request
+	 * @param response
+	 * @param vue
+	 * @param redirection
+	 * @throws ServletException
+	 * @throws IOException
+	 * @throws SQLException
+	 */
 	public static void allowUser(HttpServlet servlet, HttpServletRequest request,HttpServletResponse response, String vue, String redirection) throws ServletException, IOException, SQLException {
 		boolean [] status = GestionBDD.getInstance().getStatus(request);
 		if(SessionTools.isUser(request)) {
 			request.setAttribute("pseudo", SessionTools.getCookie(request, "user").getValue());
+			request.setAttribute("email", GestionBDD.getInstance().getEmail(SessionTools.getCookie(request, "user").getValue()));
 			servlet.getServletContext().getRequestDispatcher(vue).forward( request, response );
 		}else {
 			response.sendRedirect( request.getContextPath() + redirection);
 		}
 	}
 	
+	/**
+	 * Fonction de filtre. Si l'individu est un admin connecté, alors la vue passée en paramètre est affichée.
+	 * Sinon l'individu est redirigé vers la servlet passé en paramètre.
+	 * @param servlet
+	 * @param request
+	 * @param response
+	 * @param vue
+	 * @param redirection
+	 * @throws ServletException
+	 * @throws IOException
+	 * @throws SQLException
+	 */
 	public static void allowAdmin(HttpServlet servlet, HttpServletRequest request,HttpServletResponse response, String vue, String redirection) throws ServletException, IOException {
 		if(SessionTools.isAdmin(request)) {
 			request.setAttribute("pseudo", SessionTools.getCookie(request, "user").getValue());
@@ -108,7 +154,12 @@ public class SessionTools {
 		}
 	}
 	
-	
+	/**
+	 * Retourne le cookie nommé.
+	 * @param request
+	 * @param nameCookie
+	 * @return Cookie
+	 */
 	public static Cookie getCookie(HttpServletRequest request, String nameCookie) {
 		Cookie [] cookies = request.getCookies();
 		for(Cookie c : cookies) {
@@ -118,4 +169,5 @@ public class SessionTools {
 		}
 		return null;
 	}
+
 }
