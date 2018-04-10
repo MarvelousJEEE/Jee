@@ -101,6 +101,7 @@ public class SessionTools {
 	 * @param response
 	 */
 	public static void logOut(HttpServletRequest request, HttpServletResponse response) {
+		
 		Cookie c = getCookie(request, "user");
 		if(c!=null) {
 		String pseudo = c.getValue();
@@ -161,12 +162,16 @@ public class SessionTools {
 	 * @return Cookie
 	 */
 	public static Cookie getCookie(HttpServletRequest request, String nameCookie) {
-		Cookie [] cookies = request.getCookies();
-		for(Cookie c : cookies) {
-			if(c.getName().equals(nameCookie)) {
-				return c;
+		if ( request.getCookies() != null ) {
+			Cookie [] cookies = request.getCookies();
+			for(Cookie c : cookies) {
+				
+				if(c.getName().equals(nameCookie)) {
+					return c;
+				}
 			}
 		}
+		
 		return null;
 	}
 

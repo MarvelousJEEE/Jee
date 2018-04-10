@@ -4,9 +4,7 @@
 
 	<!-- Nav -->
 		<nav id="nav">
-			<li>
-				<a href="#copyright">Contactez-nous</a>
-			</li>
+		
 			<li>
 				<a href="#" id="logout">logOut</a>
 			</li>
