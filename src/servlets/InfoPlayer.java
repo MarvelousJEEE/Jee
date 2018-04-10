@@ -33,7 +33,6 @@ public class InfoPlayer extends HttpServlet {
 			try {
 				if(GestionBDD.getInstance().isUser(request)) {
 					if(request.getParameter("RepeatPassword").equals(request.getParameter("NewPassword"))) {
-						System.out.println("ok !!!!!!");
 						GestionBDD.getInstance().changeMDP(request);
 						response.sendRedirect(request.getContextPath() + redirection2);
 					} else {
@@ -62,7 +61,7 @@ public class InfoPlayer extends HttpServlet {
 				GestionBDD.getInstance().addPreferedGames(request.getParameter("pseudo"), game);
 			}
 			
-			response.sendRedirect(request.getContextPath() + redirection2);//TODO: Erreur ??? 
+			response.sendRedirect(request.getContextPath() + redirection2);
 		}
 	}
 }

@@ -12,7 +12,7 @@
 				</ul>
 			</nav>
 
-	<%System.out.println("Pseudo => "+request.getAttribute("pseudo"));%>
+
 		<!-- Password  -->
 			<div class="wrapper style1 first">
 				<article class="container" id="password">
