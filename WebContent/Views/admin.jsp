@@ -2,6 +2,8 @@
 <%@include file="header.jsp"%>
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="bdd.GestionBDD" %>
+
+<!--  recupération des tables de la base de donnée  -->
 <%
 	GestionBDD bdd = GestionBDD.getInstance();
 	ResultSet games = bdd.getGames();
@@ -35,6 +37,7 @@
 						<h1> List of Games !  </h1>		
 							<% String show;
 							   String hide; 
+							  /*  parcours des tuples de la table Games */
 							   while (games.next()) {
 							   	if(games.getBoolean("isShowed")){
 									show = "checked";
@@ -72,10 +75,13 @@
 					</header>
 					<div class="container">	
 						<form action="/J2EE/admin" method="post">
-						<input type="hidden" value="add" name="option" />
-							Game title	 <input type="text" name="name">  <br>
-							Release (YYYY-MM-DD) 	<input type="text" name="release"> <br>
-							Infos <input type="text" name="infos"> <br>
+							<input type="hidden" value="add" name="option" />
+							<span>Game title</span>		 		
+							<input type="text" name="name">  <br>
+							<span>Release (YYYY-MM-DD) </span>	
+							<input type="text" name="release"> <br>
+							<span>Infos</span>					
+						    <input type="text" name="infos"> <br>
 							<button type="submit">ADD</button>
 						</form>
 					</div>		
@@ -85,6 +91,7 @@
 
 
 		<!-- Table player  -->
+		
 			<div class="wrapper style3">
 				<article id="players">
 					<header>
@@ -94,64 +101,53 @@
 					<div class="container">
 						<table class="table table-striped table-dark">
 							  <thead>
-							    <tr>
-							    
-							    	
+							    <tr>    
 							      <th scope="col">#</th>
 							      <th scope="col">Pseudo</th>
 							      <th scope="col">Subscription Date</th>
 							      <th scope="col">Plays</th>
-							      <th scope="col">Status</th>
-							     
+							      <th scope="col">Status</th>							  
 							    </tr>
 							  </thead>
 							  <tbody>
-							  <% int k = 0; 
-							  	 String ban;
-							  %>
-							   <%	while (players.next()) { 
-							    k++;
-							   %>
-							    <%
-								ResultSet plays = bdd.getPlays( (String) players.getString("pseudo"));
-							    plays.next();
-								      if( players.getBoolean("ban")){
-								    	ban = "Banned";								    								    	  
-								      }else {
-								    	ban = "Authorized";								   
-								      }   
-								      %>
-							  
-							    <tr>
-							      <th scope="row"><%=k %></th>
-							      <td> <%= players.getString("pseudo") %> </td>
-							         <td> <%= players.getString("subscription") %> </td>
-							      
-								  <td> <%= 
-								  plays.getString("count(*)") %> </td> 
-							     <td> 
-							     
-							     
-							     	<form action="/J2EE/admin" method="post">
-										<input type="hidden" value= <%= players.getString("pseudo") %> name="pseudo" />
-										<input type="hidden" value="ban"  name="option" />
-										<button  type="submit" class="btn btn-primary btn-sm" value= <%= players.getString("ban") %> name="ban"  >  <%= ban %> </button>	 	   
-										</form>
-			    
-							    </tr>
-							    
-							    <% } %>
+								  <% 	int k = 0; 
+									  	String ban;
+									  	while (players.next()) { 
+									    k++;								 
+										ResultSet plays = bdd.getPlays( (String) players.getString("pseudo"));
+									    plays.next();
+									    if( players.getBoolean("ban")){
+									    	ban = "Banned";								    								    	  
+									    }else {
+									    	ban = "Authorized";								   
+									    }   
+								  %>
 							 
-							  </tbody>
+								    <tr>
+								      	 <th scope="row"><%=k %></th>
+								     	 <td> <%= players.getString("pseudo") %> </td>
+								         <td> <%= players.getString("subscription") %> </td>								    
+									     <td> <%= plays.getString("count(*)") %> </td> 
+								   	     <td> 
+									     	<form action="/J2EE/admin" method="post">
+												<input type="hidden" value= <%= players.getString("pseudo") %> name="pseudo" />
+												<input type="hidden" value="ban"  name="option" />
+												<button  type="submit" class="btn btn-primary btn-sm" value= <%= players.getString("ban") %> name="ban"  >  <%= ban %> </button>	 	   
+											</form>
+										</td>
+								    </tr>								    
+								   <% } %>
+						  </tbody>
 						</table>
-					
-					</div>
+				   </div>
 				
 				</article>
 			</div>
 
 
 		<!-- CurrentPlay -->
+		
+		
 			<div class="wrapper style1">
 				<article id="plays" class="container 75%">
 					<header>
@@ -159,49 +155,44 @@
 						<p>You can find here all current plays and end them as you please  </p>
 					</header>
 					<div>
-					
 						<table class="table table-striped table-dark">
 							  <thead>
-							    <tr>
-							    
-							    	
+							    <tr>	
 							      <th scope="col">#</th>
 							      <th scope="col">Game</th>
 							      <th scope="col"> Pseudo </th>
 							      <th scope="col">Start</th>
 							      <th scope="col">Stop</th>
-							     
 							    </tr>
 							  </thead>
 							  <tbody>
 							  <% int i = 0; 			
-							  %>
-							   <%	while (matchs.next()) { 
-							    i++;
+							   	 while (matchs.next()) { 
+							     i++;
 							   %>
-							
 							    <tr>
 							      <th scope="row"><%=i %></th>
 							      <td><%= matchs.getString("gameName") %></td>
 							      <td><%= matchs.getString("pseudo") %></td>
-							          <td><%= matchs.getString("hBegin") %></td>
-							      
-							     <td>  <form action="/J2EE/admin" method="post">
-                    <input type="hidden" value="end"  name="option" />
-                    <button  type="submit" class="btn btn-primary btn-sm" value= <%= matchs.getString("idMatch") %> name="id"  >  End the game </button>        
-                    </form>
-                    </td>
-							    </tr>
-							    
-							    <% } %>
-							 
+							      <td><%= matchs.getString("hBegin") %></td>					
+							      <td>  
+								     <form action="/J2EE/admin" method="post">
+					                    <input type="hidden" value="end"  name="option" />
+					                    <button  type="submit" class="btn btn-primary btn-sm" value= <%= matchs.getString("idMatch") %> name="id"  >  End the game </button>        
+					                 </form>
+						          </td>
+							    </tr>							    
+							    <% } %>							 
 							  </tbody>
 						</table>
 					</div>
 				</article>
 			</div>
 			
+			
 			<!-- Finished Plays  -->
+			
+			
 			<div class="wrapper style2">
 				<article id="history" class="container 75%">
 					<header>
@@ -213,35 +204,27 @@
 						<table class="table table-striped table-dark">
 							  <thead>
 							    <tr>
-			    
-							    	
 							      <th scope="col">#</th>
 							      <th scope="col">Game</th>
 							      <th scope="col"> Pseudo </th>
 							      <th scope="col">Start</th>
 							      <th scope="col">End</th>
-							     
 							    </tr>
 							  </thead>
 							  <tbody>
 							  <%
-							  	int l = 0;
-							  %>
-							   <%
-							   	while (matchsEnd.next()) { 
-							   					    l++;
-							   %>
-							
+							  	int l = 0;						  
+								while (matchsEnd.next()) { 
+							   	 l++;
+							   %>							
 							    <tr>
 							      <th scope="row"><%=l%></th>
 							      <td><%=matchsEnd.getString("gameName")%></td>
 							      <td><%=matchsEnd.getString("pseudo")%></td>
 							      <td><%=matchsEnd.getString("hBegin")%></td>     
 							     <td><%=matchsEnd.getString("hEnd")%></td>
-							    </tr>
-							    
-							    <% } %>
-							 
+							    </tr>							    
+							    <% } %>							 
 							  </tbody>
 						</table>
 					</div>
@@ -250,11 +233,16 @@
 			
 
 
+
+
 <script>
 
+
+//Fonction de rafraïchissement de la page 
 refreshGo();
 
 function refreshGo() {
+	//appelle de la fonction refresh toute les 5 minutes
     myInterval = setInterval(refresh,60*5000);
 
 };
@@ -262,6 +250,7 @@ function refreshGo() {
 
 function refresh(){
 	
+	//redirection vers la page admin 
 	var redirection = "http://"+window.location.host+"/J2EE/admin";
 	document.location.href=redirection;
    

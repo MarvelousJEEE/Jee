@@ -1,8 +1,11 @@
 					<div class="wrapper style4">
 						<footer>
 							<ul id="copyright">
-								<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+								<li>&copy; MarvelousGames. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+								<li><a href="https://github.com/MarvelousJEEE/Jee" class="icon fa-github"><span class="label">Github</span></a></li>
 							</ul>
+							
+							
 						</footer>
 					</div>
 				

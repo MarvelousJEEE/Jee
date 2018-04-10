@@ -4,12 +4,10 @@
 
 	<!-- Nav -->
 		<nav id="nav">
-			<li>
-				<a href="#copyright">Contactez-nous</a>
-			</li>
-			<li>
+		
+	
 				<a href="#" id="logout">logOut</a>
-			</li>
+		
 		</nav>
 	<div class="wrapper style1 first">
 				<article class="container" id="gameList">
@@ -21,8 +19,6 @@
 			
 <%@include file="footer.jsp"%>
 
-
-		
 
 
 		

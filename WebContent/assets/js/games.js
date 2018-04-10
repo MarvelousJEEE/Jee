@@ -21,9 +21,9 @@
 					}
 				}
 				else if(compteurTable[numeroJeu] == -1){
-						alert('Vous ne pouvez pas jouer à deux jeux à la fois, stopper le jeu en cours');
+						alert('Vous ne pouvez pas jouer à deux jeux à la fois, stopper le jeu en cours !');
 				} else {
-					alert('Vous êtes déjà en train de jouer');
+					alert('Vous êtes déjà en train de jouer à ' + game + '!');
 				}
 			}
 	
@@ -42,7 +42,7 @@
 						compteurTable[k]=0;			// 0 siginifie que le jeu peut être lancé
 					};
 				} else {
-					alert('Vous ne jouez pas à ce jeu, arrêter de jouer à  ' + game)				}
+					alert('Vous ne jouez pas à ce jeu, vous jouez déjà à un autre jeu !')				}
 			}
 	
 			function newXMLHttpRequest() {

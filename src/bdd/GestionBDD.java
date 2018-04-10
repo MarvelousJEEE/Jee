@@ -510,14 +510,7 @@ public class GestionBDD {
 	    }
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
+			
 	public void changeMDP(HttpServletRequest request) {
 		Connection connexion = null;
 		ConfigBDD conf = ConfigBDD.getInstance();
