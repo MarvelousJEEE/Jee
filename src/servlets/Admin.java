@@ -18,7 +18,7 @@ import bdd.GestionBDD;
 @WebServlet("/admin")
 public class Admin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	GestionBDD bdd;
+	GestionBDD bdd = GestionBDD.getInstance(); 
 	public static final String vue = "/Views/admin.jsp";
 	public static final String redirection = "/signin";
 
@@ -26,7 +26,7 @@ public class Admin extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
 	
-	
+
     
     
     
