@@ -3,8 +3,8 @@ Projet JEE
 
 **Configuration**
 - Serveur : TomCat v8.05
+- OpenJDK8
 
-Si des erreurs de ForeignKey apparaissent installer les .deb de mysql à l'adresse : 
 
 
 **Installation**
@@ -18,3 +18,6 @@ Si des erreurs de ForeignKey apparaissent installer les .deb de mysql à l'adres
 
 **Lancement**
 - Entrez l'URI : localhost:8080/J2EE/signin
+
+**Problèmes**
+- Si des erreurs de ForeignKey apparaissent vueillez installer les .deb de mysql à l'adresse : https://dev.mysql.com/downloads/mysql/
