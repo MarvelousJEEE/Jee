@@ -48,7 +48,7 @@
 								    	show="";
 								      }   
 								      %>
-									<li>  
+									<li><br>  
 										<form action="/J2EE/admin" method="post">
 										<label><%= games.getString("name") %></label> <input type="hidden" value= <%= games.getString("name") %> name="name" />
 						    				 <%= games.getString("infos") + "   " + games.getString("release")%> 
