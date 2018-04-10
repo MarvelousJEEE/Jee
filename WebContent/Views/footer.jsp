@@ -1,7 +1,7 @@
 					<div class="wrapper style4">
 						<footer>
 							<ul id="copyright">
-								<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+								<li>&copy; MarvellousGames. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
 							</ul>
 						</footer>
 					</div>
