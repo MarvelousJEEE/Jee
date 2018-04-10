@@ -37,7 +37,7 @@
 							"application/x-www-form-urlencoded");
 					req.send("variable1=" + pseudo + "&" + "variable2=" + game
 							+ "&" + "variable3=stop");
-					alert('Vous avez finir de jouer à '+game);
+					alert('Vous avez fini de jouer à '+game);
 					for(k=1;k<=size;k++){
 						compteurTable[k]=0;			// 0 siginifie que le jeu peut être lancé
 					};
