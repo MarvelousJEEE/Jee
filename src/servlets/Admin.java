@@ -26,16 +26,7 @@ public class Admin extends HttpServlet {
      * @see HttpServlet#HttpServlet()
      */
 	
-	private static Admin admin = new Admin();
 	
-    public Admin() {
-        super();
-        bdd = GestionBDD.getInstance();
-    }
-    
-    public static Admin getInstance() {
-    	return admin;
-    }
     
     
     

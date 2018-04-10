@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import servlets.SessionTools;
 
 /**
- * Servlet Filter implementation class FilterUser
+ * FilterAdmin filtre les connexions vers les servlets (sauf admin et signin) et les pages /Views/*.jsp
  */
 @WebFilter(
 		urlPatterns = { 
@@ -36,9 +36,10 @@ public class FilterUser implements Filter {
 
 	}
 
-	
+	/**
+	 * Méthode appelé à chaque requête vers les servlets et les pages en question
+	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("Filtre users");
 		if(!SessionTools.isUser((HttpServletRequest)request)) {
 			((HttpServletResponse) response).sendRedirect( ((HttpServletRequest)request).getContextPath() + redirection2);
 		}else {

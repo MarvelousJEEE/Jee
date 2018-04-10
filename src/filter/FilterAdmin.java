@@ -15,7 +15,7 @@ import servlets.Admin;
 import servlets.SessionTools;
 
 /**
- * Servlet Filter implementation class FilterAdmin
+ * FilterAdmin filtre les connexions vers la servlet admin et la page /Views/admin.jsp
  */
 @WebFilter({ "/admin", "/Views/admin.jsp" })
 public class FilterAdmin implements Filter {
@@ -28,9 +28,11 @@ public class FilterAdmin implements Filter {
 	public void destroy() {
 		
 	}
-
+	
+	/**
+	 * Méthode appelé à chaque requête vers les servlets et les pages en question
+	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		System.out.println("filtre admin!!!");
 		if(!SessionTools.isAdmin((HttpServletRequest)request)) {
 			((HttpServletResponse) response).sendRedirect( ((HttpServletRequest)request).getContextPath() + redirection2);
 		}else {
