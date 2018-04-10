@@ -4,7 +4,7 @@ Projet JEE
 **Configuration**
 - Serveur : TomCat v8.05
 - OpenJDK8
-
+- Config BDD : (user=root / mdp=root)
 
 
 **Installation**
