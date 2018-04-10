@@ -38,6 +38,7 @@ public class GestionBDD {
 		return gestion;
 	}
 	
+	//Méthode de test de l'utilisateur 
 	public boolean isUser(HttpServletRequest request) throws SQLException {
 		boolean isUser = false;
 		Connection connexion = null;
@@ -48,7 +49,9 @@ public class GestionBDD {
 	    String pseudo = (String) request.getParameter("pseudo");
 	    String mdp = (String) request.getParameter("password");
 	    
+	    
 	    if(pseudo != null && mdp != null) {
+	    	//vérification des pseudo et mot de passe dans la base de donnée 
 	    	try {
 	    		Class.forName("com.mysql.jdbc.Driver");
 		        connexion = (Connection) DriverManager.getConnection(conf.getUrl(), conf.getUser(), conf.getPassword());
@@ -65,6 +68,7 @@ public class GestionBDD {
 				
 		        if ( resultat != null ) {
 		            try {
+		            	//S'il y a un joueur dans la base de donnée avec le pseudo et le mot de passe voulues, isUser passe à True
 		            	isUser=hasTuple(resultat);
 		                resultat.close();
 		            } catch ( SQLException ignore ) {
@@ -142,6 +146,7 @@ public class GestionBDD {
 	    }
 	    return status;
 	}
+	
 	
 	public boolean isAdmin(HttpServletRequest request) throws SQLException {
 		Connection connexion = null;
