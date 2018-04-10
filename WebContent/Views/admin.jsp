@@ -46,7 +46,7 @@
 							%> 
 							<form action="/J2EE/admin" method="post">
 								<label><%= games.getString("name") %></label> 
-								<input type="hidden" value= <%= games.getString("name") %> name="name" />   <!-- Recupération du nom du jeu -->
+								<input type="hidden" value= <%= games.getString("name") %> name="name" />   <!-- Recupï¿½ration du nom du jeu -->
 			    		        <span>	  	 <%= games.getString("infos") + "   " + games.getString("release")%>   </span>
 			 	                <label > <input type="radio" name="option" value="show" <%=show %>> Show</label>
 								<label><input type="radio" name="option" value="hide" <%=hide %>>  Hide</label>
