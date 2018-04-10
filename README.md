@@ -21,3 +21,4 @@ Projet JEE
 
 **Problèmes**
 - Si des erreurs de ForeignKey apparaissent vueillez installer les .deb de mysql à l'adresse : https://dev.mysql.com/downloads/mysql/
+- Si la connexion d'un utilisateur échoue alors qu'il existe bien, cela peut provenir de la connexion du serveur à la BDD. Vérifier votre mdp et votre identifiant root. Si cela persiste, nous vous conseillons de lancer le serveur sous eclipse.
